@@ -1,0 +1,294 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const groups = [
+  {
+    label: 'HARDWARE 機体',
+    items: [
+      ['Desktop - Ryzen 5 7500F', 'main unit'],
+      ['ThinkPad X390 Yoga', 'field unit'],
+      ['Cornix split keyboard', 'daily driver'],
+    ],
+  },
+  {
+    label: 'DESKTOP 環境',
+    items: [
+      ['Arch Linux', 'btw'],
+      ['Hyprland', 'compositor'],
+      ['Quickshell - own shell', 'see projects/02'],
+    ],
+  },
+  {
+    label: 'EDITOR 操縦席',
+    items: [
+      ['Neovim + LSP', 'jdtls for Java'],
+      ['tmux', 'sessions per project'],
+      ['Fira Code Nerd Font', 'ligatures on'],
+    ],
+  },
+  {
+    label: 'AI STACK 支援機',
+    items: [
+      ['Claude Code', 'daily'],
+      ['Multi-agent orchestrator', 'see blog/01'],
+      ['Global CLAUDE.md, synced', 'two machines'],
+    ],
+  },
+];
+
+const swatches = [
+  'var(--ctp-red)',
+  'var(--ctp-peach)',
+  'var(--ctp-yellow)',
+  'var(--ctp-green)',
+  'var(--ctp-blue)',
+  'var(--ctp-mauve)',
+  'var(--ctp-text)',
+];
+---
+
+<Layout title="Uses">
+  <section class="uses-section">
+    <div class="uses-header hud-grid-bg">
+      <div class="uses-watermark">装備</div>
+      <div class="header-content">
+        <div class="hero-tag">
+          <span class="stripe"><span class="stripe-track"></span></span>
+          <span>DUU261.INDEVS.IN - LOADOUT</span>
+        </div>
+        <h1 class="uses-title">Uses</h1>
+        <p class="uses-tagline">The full loadout - updated when it changes, themed Macchiato since day one.</p>
+      </div>
+    </div>
+
+    <div class="uses-grid">
+      {groups.map((group) => (
+        <article class="uses-card">
+          <span class="card-label">{group.label}</span>
+          <div class="uses-list">
+            {group.items.map(([name, note]) => (
+              <div class="uses-row">
+                <span class="item-name">{name}</span>
+                <span class="item-note">{note}</span>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+
+      <article class="theme-card">
+        <div class="theme-copy">
+          <span class="card-label">THEME 塗装</span>
+          <span class="theme-line">Catppuccin Macchiato - terminal, editor, shell, browser, this site.</span>
+        </div>
+        <div class="swatches" aria-label="Catppuccin Macchiato swatches">
+          {swatches.map((color) => <span style={{ '--swatch-color': color }}></span>)}
+        </div>
+      </article>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.uses-section {
+  flex: 1;
+}
+
+.uses-header {
+  position: relative;
+  padding: 72px 72px 56px;
+  overflow: hidden;
+}
+
+.header-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.uses-watermark {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 200px;
+  line-height: 1;
+  color: rgba(237, 135, 150, 0.09);
+  user-select: none;
+}
+
+.uses-title {
+  margin: 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--ctp-text);
+}
+
+.uses-tagline {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ctp-subtext);
+}
+
+.uses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0 72px 64px;
+}
+
+.uses-card,
+.theme-card {
+  background: var(--ctp-mantle);
+  border-top: 3px solid var(--ctp-red);
+  padding: 26px 30px;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+}
+
+.uses-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.uses-card:hover,
+.theme-card:hover {
+  background: var(--ctp-base);
+}
+
+.card-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ctp-red);
+}
+
+.uses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uses-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.item-name {
+  color: var(--ctp-text);
+  font-weight: 600;
+}
+
+.item-note {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ctp-muted);
+}
+
+.theme-card {
+  grid-column: 1 / -1;
+  border-top-color: var(--ctp-peach);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.theme-card .card-label {
+  color: var(--ctp-peach);
+}
+
+.theme-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theme-line {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ctp-text);
+}
+
+.swatches {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.swatches span {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--swatch-color);
+}
+
+@media (max-width: 1080px) {
+  .uses-header {
+    padding: 56px 56px 48px;
+  }
+
+  .uses-grid {
+    padding: 0 56px 56px;
+  }
+
+  .uses-title {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 760px) {
+  .uses-header {
+    padding: 40px 24px 32px;
+  }
+
+  .uses-watermark {
+    font-size: 120px;
+    top: -20px;
+    right: -10px;
+  }
+
+  .uses-title {
+    font-size: 40px;
+  }
+
+  .uses-grid {
+    grid-template-columns: 1fr;
+    padding: 0 24px 40px;
+  }
+
+  .uses-card,
+  .theme-card {
+    padding: 22px 20px;
+  }
+
+  .uses-row,
+  .theme-card {
+    align-items: flex-start;
+  }
+
+  .uses-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .theme-card {
+    flex-direction: column;
+  }
+
+  .swatches {
+    justify-content: flex-start;
+  }
+}
+</style>

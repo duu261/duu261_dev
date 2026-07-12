@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const statusCards = [
+  {
+    label: 'NOW 現在',
+    accent: 'var(--ctp-red)',
+    text: 'Final year at FPT - shipping this site - studying Japanese daily',
+  },
+  {
+    label: 'NEXT 次',
+    accent: 'var(--ctp-peach)',
+    text: 'Backend / BrSE internship - JLPT N3 - api.duu261.dev live',
+  },
+  {
+    label: 'THEN 目標',
+    accent: 'var(--ctp-green)',
+    text: 'BrSE bridging JP clients and VN teams - trusted at both ends',
+  },
+];
+---
+
+<Layout title="About">
+  <section class="about-section">
+    <div class="about-header hud-grid-bg">
+      <div class="about-watermark">自己紹介</div>
+      <div class="header-content">
+        <div class="hero-tag">
+          <span class="stripe"><span class="stripe-track"></span></span>
+          <span>DUU261.INDEVS.IN - PILOT FILE</span>
+        </div>
+        <h1 class="about-title">About</h1>
+      </div>
+    </div>
+
+    <div class="about-body">
+      <div class="about-copy">
+        <p>
+          I'm <strong>Vũ</strong> - final-year software engineering student at FPT University, on the Java BrSE track in Ho Chi Minh City. I build backend systems in Spring Boot and everything around them: AI workflows, Linux desktop, and hardware on my desk.
+        </p>
+        <p>
+          <strong class="lead">Why Japanese?</strong> A BrSE sits between Japanese clients and Vietnamese engineers, and the bridge only works if both ends trust it. I'm building toward JLPT N3 and beyond, because requirements lost in translation become bugs shipped in production.
+        </p>
+        <p>
+          <strong class="lead">Why Linux and hardware?</strong> My desktop is itself a project: Arch + Hyprland with a shell I wrote in QML instead of patching someone else's. Same curiosity leaks downward: an ESP32 dongle here, an nRF52840 there.
+        </p>
+        <p>
+          <strong class="lead">Where this is headed:</strong> short term: internship, N3, and Phase 2 of this site with live Spring Boot demos. Long term: engineer JP teams hand ambiguous, hard problems to.
+        </p>
+      </div>
+
+      <div class="status-grid">
+        {statusCards.map((card) => (
+          <article class="status-card" style={{ '--card-accent': card.accent }}>
+            <span class="status-label">{card.label}</span>
+            <span class="status-text">{card.text}</span>
+          </article>
+        ))}
+      </div>
+
+      <div class="contact-row">
+        <a class="btn btn-primary" href="mailto:vu@duu261.dev">MAIL VU@DUU261.DEV</a>
+        <a class="btn btn-outline" href="https://github.com/duu261">GITHUB /DUU261</a>
+        <a class="btn btn-outline" href="https://youtube.com/@duu26102">YOUTUBE /DUU26102</a>
+        <span class="response-time">response time: same day, most days</span>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.about-section {
+  flex: 1;
+}
+
+.about-header {
+  position: relative;
+  padding: 72px 72px 56px;
+  overflow: hidden;
+}
+
+.header-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.about-watermark {
+  position: absolute;
+  top: -20px;
+  right: -30px;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 150px;
+  line-height: 1.1;
+  writing-mode: vertical-rl;
+  color: rgba(237, 135, 150, 0.09);
+  user-select: none;
+}
+
+.about-title {
+  margin: 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--ctp-text);
+}
+
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 0 72px 64px;
+}
+
+.about-copy {
+  max-width: 68ch;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-copy p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ctp-subtext);
+}
+
+.about-copy strong {
+  color: var(--ctp-text);
+  font-weight: 700;
+}
+
+.about-copy .lead {
+  color: var(--ctp-peach);
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 26px;
+  background: var(--ctp-mantle);
+  border-top: 3px solid var(--card-accent);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+}
+
+.status-card:hover {
+  background: var(--ctp-base);
+}
+
+.status-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--card-accent);
+}
+
+.status-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ctp-subtext);
+}
+
+.contact-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.response-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ctp-muted);
+}
+
+@media (max-width: 1080px) {
+  .about-header {
+    padding: 56px 56px 48px;
+  }
+
+  .about-body {
+    padding: 0 56px 56px;
+  }
+
+  .about-title {
+    font-size: 52px;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-header {
+    padding: 40px 24px 32px;
+  }
+
+  .about-watermark {
+    font-size: 92px;
+    top: -10px;
+    right: -16px;
+  }
+
+  .about-title {
+    font-size: 40px;
+  }
+
+  .about-body {
+    gap: 36px;
+    padding: 0 24px 40px;
+  }
+
+  .contact-row .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+</style>
