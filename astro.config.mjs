@@ -58,11 +58,90 @@ function diagramColors() {
   return defineMdastPlugin({
     name: 'diagram-colors',
     code(node) {
-      if (!node.value.includes('──▶')) return;
+      if (node.lang === 'blog-diagram' || !node.value.includes('──▶')) return;
       const lines = node.value.replace(/\n+$/, '').split('\n');
       const last = [...lines].reverse().find((l) => l.trim());
       const html = lines.map((l) => colorLine(l, l === last)).join('\n');
       return { rawHtml: `<pre class="diagram"><code>${html}</code></pre>` };
+    },
+  });
+}
+
+function blogDiagrams() {
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const span = (cls, s) => `<span class="${cls}">${esc(s)}</span>`;
+  const colorLine = (line) => {
+    const marker = line.match(/[├└]?──▶/);
+    if (!marker) {
+      const annotated = line.match(/^([^()]+)(\s*\([^)]*\))$/);
+      if (annotated) return span('dia-red', annotated[1]) + span('dia-muted', annotated[2]);
+      return esc(line);
+    }
+    const idx = marker.index ?? 0;
+    const prefix = line.slice(0, idx);
+    const rest = line.slice(idx + marker[0].length);
+    const parts = rest.split('──▶');
+    const tree = marker[0].startsWith('├') || marker[0].startsWith('└');
+    if (!tree) {
+      const colors = ['dia-red', 'dia-blue', 'dia-green', 'dia-mauve'];
+      return span('dia-peach', prefix) + marker[0] + parts
+        .map((part, partIdx) => span(colors[Math.min(partIdx, colors.length - 1)], part))
+        .join('──▶');
+    }
+    const first = parts[0] ?? '';
+    const columns = first.match(/^(\s*\S+(?:\s+\S+)*?)(\s{2,}.*)$/);
+    const firstHtml = columns
+      ? span('dia-peach', columns[1]) + span('dia-muted', columns[2])
+      : span('dia-peach', first);
+    const colors = ['dia-red', 'dia-blue', 'dia-green', 'dia-mauve'];
+    return esc(prefix) + marker[0] + firstHtml + parts
+      .slice(1)
+      .map((part, partIdx) => '──▶' + span(colors[Math.min(partIdx, colors.length - 1)], part))
+      .join('');
+  };
+  return defineMdastPlugin({
+    name: 'blog-diagrams',
+    code(node) {
+      if (node.lang !== 'blog-diagram') return;
+      const lines = node.value.replace(/\n+$/, '').split('\n');
+      const html = lines.map((l) => colorLine(l)).join('\n');
+      return { rawHtml: `<pre class="blog-diagram"><code>${html}</code></pre>` };
+    },
+  });
+}
+
+function filePanels() {
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const span = (cls, s) => `<span class="${cls}">${esc(s).replace(/ /g, '&nbsp;')}</span>`;
+  const colorFileLine = (line) => {
+    if (line.startsWith('##')) return span('file-comment', line);
+    if (line.startsWith('- ')) return span('file-bullet', '-') + esc(line.slice(1)).replace(/ /g, '&nbsp;');
+    const eq = line.indexOf('=');
+    if (eq !== -1) {
+      return span('file-key', line.slice(0, eq).trimEnd()) +
+        esc(line.slice(line.lastIndexOf(line.slice(0, eq).trimEnd()) + line.slice(0, eq).trimEnd().length, eq + 1)).replace(/ /g, '&nbsp;') +
+        span('file-value', line.slice(eq + 1).trimStart());
+    }
+    return esc(line).replace(/ /g, '&nbsp;');
+  };
+  const codeHtml = (s) =>
+    s
+      .split('\n')
+      .map((line) => `<span>${colorFileLine(line)}</span>`)
+      .join('<br>');
+  const attr = (meta, name) => {
+    const m = meta?.match(new RegExp(`${name}="([^"]+)"`));
+    return m?.[1] ?? '';
+  };
+  return defineMdastPlugin({
+    name: 'file-panels',
+    code(node) {
+      if (node.lang !== 'file') return;
+      const title = attr(node.meta, 'title') || 'file';
+      const status = attr(node.meta, 'status');
+      return {
+        rawHtml: `<div class="file-panel"><div class="file-panel-bar"><span>${esc(title)}</span>${status ? `<span class="status">${esc(status)}</span>` : ''}</div><div class="file-code">${codeHtml(node.value)}</div></div>`,
+      };
     },
   });
 }
@@ -72,7 +151,7 @@ export default defineConfig({
   markdown: {
     processor: satteri({
       hastPlugins: [jpHeadingLabels()],
-      mdastPlugins: [diagramColors()],
+      mdastPlugins: [filePanels(), blogDiagrams(), diagramColors()],
     }),
     shikiConfig: {
       theme: 'catppuccin-macchiato',

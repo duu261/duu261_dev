@@ -6,8 +6,10 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.date(),
-    tag: z.enum(['java', 'ai-workflow', 'linux', 'brse', 'hardware']),
+    tag: z.enum(['java', 'tools', 'linux', 'brse', 'hardware']),
     hook: z.string(),
+    readTime: z.string().optional(),
+    context: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

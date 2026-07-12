@@ -336,11 +336,18 @@ main > * { flex-shrink: 0; }
 .ticker .dot { color: var(--ctp-peach); }
 
 /* ascii architecture diagrams (classes injected by diagramColors in astro.config) */
-.diagram { background: var(--ctp-mantle); color: var(--ctp-text); }
-.diagram .dia-peach { color: var(--ctp-peach); }
-.diagram .dia-red { color: var(--accent-primary); }
-.diagram .dia-blue { color: var(--ctp-blue); }
-.diagram .dia-muted { color: var(--ctp-muted); }
+.diagram,
+.blog-diagram { background: var(--ctp-mantle); color: var(--ctp-text); }
+.diagram .dia-peach,
+.blog-diagram .dia-peach { color: var(--ctp-peach); }
+.diagram .dia-red,
+.blog-diagram .dia-red { color: var(--accent-primary); }
+.diagram .dia-blue,
+.blog-diagram .dia-blue { color: var(--ctp-blue); }
+.blog-diagram .dia-green { color: var(--ctp-green); }
+.blog-diagram .dia-mauve { color: var(--ctp-mauve); }
+.diagram .dia-muted,
+.blog-diagram .dia-muted { color: var(--ctp-muted); }
 
 /* work + writing */
 .section-block { padding: 56px 72px 72px; display: flex; flex-direction: column; gap: 40px; }

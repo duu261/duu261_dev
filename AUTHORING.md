@@ -35,8 +35,8 @@ summary: One-liner for cards.
 ## Diagrams
 
 1. **ASCII (default)**: fenced ```txt block. Any block containing `──▶` is
-   auto-colored: source before arrow peach, target after red, `(...)` muted,
-   last non-empty line blue. Other fences get normal Catppuccin code highlighting.
+  auto-colored: source before arrow peach, target after red, `(...)` muted,
+  last non-empty line blue. Other fences get normal Catppuccin code highlighting.
 2. **Excalidraw/hand SVG**: draw with palette colors, save to `public/diagrams/`,
    embed `![alt](/diagrams/name.svg)`.
 3. **Mermaid**: write `foo.mmd`, run `scripts/mermaid.sh foo.mmd`, commit the
@@ -45,3 +45,20 @@ summary: One-liner for cards.
 
 Palette hexes when drawing: red #ed8796 · peach #f5a97f · blue #8aadf4 ·
 green #a6da95 · text #cad3f5 · muted #6e738d · bg #24273a / #1e2030.
+
+## Blog-only blocks
+
+- File panel: fenced ```file block with metadata:
+  ````md
+  ```file title="~/.config/app.conf" status="synced ✓"
+  ## paths
+  key = value
+  - rule item
+  ```
+  ````
+  The build renders the notched terminal file panel and colors comments, keys,
+  values, and bullets. Do not hand-write HTML.
+- Warning callout: blockquote with bold label:
+  `> **警告 WAR STORY -** One sentence.`
+- Blog diagram: fenced ```blog-diagram block. Same arrow coloring as diagrams,
+  but no special blue final line, so all rows stay visually consistent.
