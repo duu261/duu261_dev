@@ -23,6 +23,13 @@ importers:
       astro:
         specifier: ^7.0.7
         version: 7.0.7(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)
+    devDependencies:
+      '@astrojs/markdown-satteri':
+        specifier: 0.3.3
+        version: 0.3.3
+      satteri:
+        specifier: 0.9.5
+        version: 0.9.5
 
 packages:
 

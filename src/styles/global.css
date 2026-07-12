@@ -228,8 +228,17 @@ main > * { flex-shrink: 0; }
 .work-card:active { transform: translateY(-2px); }
 .btn-primary { color: var(--ctp-crust); background: var(--accent-primary); }
 .btn-primary:hover { background: var(--ctp-peach); }
-.btn-outline { color: var(--ctp-peach); border: 1px solid var(--ctp-peach); }
-.btn-outline:hover { background: rgba(245,169,127,0.12); }
+/* a real border gets eaten unevenly by the clip-path, so the top/bottom lines
+   are background gradients (clip-safe); slanted sides stay open by design */
+.btn-outline {
+  --btn-fill: transparent;
+  color: var(--ctp-peach);
+  background:
+    linear-gradient(var(--ctp-peach), var(--ctp-peach)) left top / 100% 1px no-repeat,
+    linear-gradient(var(--ctp-peach), var(--ctp-peach)) left bottom / 100% 1px no-repeat,
+    linear-gradient(var(--btn-fill), var(--btn-fill));
+}
+.btn-outline:hover { --btn-fill: rgba(245, 169, 127, 0.12); }
 
 /* HUD */
 .hud-wrap { position: relative; height: 560px; }
@@ -325,6 +334,13 @@ main > * { flex-shrink: 0; }
 .ticker span { padding: 0 28px; }
 .ticker .warn { color: var(--accent-primary); }
 .ticker .dot { color: var(--ctp-peach); }
+
+/* ascii architecture diagrams (classes injected by diagramColors in astro.config) */
+.diagram { background: var(--ctp-mantle); color: var(--ctp-text); }
+.diagram .dia-peach { color: var(--ctp-peach); }
+.diagram .dia-red { color: var(--accent-primary); }
+.diagram .dia-blue { color: var(--ctp-blue); }
+.diagram .dia-muted { color: var(--ctp-muted); }
 
 /* work + writing */
 .section-block { padding: 56px 72px 72px; display: flex; flex-direction: column; gap: 40px; }

@@ -1,0 +1,17 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "darkMode": true,
+    "background": "transparent",
+    "primaryColor": "#24273a",
+    "primaryTextColor": "#cad3f5",
+    "primaryBorderColor": "#f5a97f",
+    "secondaryColor": "#1e2030",
+    "secondaryBorderColor": "#ed8796",
+    "tertiaryColor": "#1e2030",
+    "tertiaryBorderColor": "#8aadf4",
+    "lineColor": "#6e738d",
+    "fontFamily": "Fira Code, monospace",
+    "fontSize": "14px"
+  }
+}

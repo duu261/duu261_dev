@@ -16,6 +16,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
+    context: z.string().optional(),
     role: z.enum(['team project', 'daily driver', 'hardware']),
     stack: z.array(z.string()),
     repo: z.string().url().optional(),

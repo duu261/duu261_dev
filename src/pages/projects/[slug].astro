@@ -1,0 +1,295 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const number = String(project.data.order).padStart(2, '0');
+---
+
+<Layout title={project.data.title}>
+  <section class="case-section">
+    <div class="case-hero hud-grid-bg">
+      <div class="case-number">{number}</div>
+      <div class="hero-content">
+        <div class="case-prompt">
+          <span class="prompt">❯</span>
+          <span class="cmd">cat ~/projects/{project.id}.md</span>
+        </div>
+        <h1 class="case-title">{project.data.title}</h1>
+        <div class="case-meta">
+          {project.data.context && (
+            <>
+              <span class="context">{project.data.context}</span>
+              <span class="dot">·</span>
+            </>
+          )}
+          <span class="role">{project.data.role}</span>
+          <span class="dot">·</span>
+          <span class="tags">
+            {project.data.stack.map((tag: string) => (
+              <span class="stack-tag">{tag}</span>
+            ))}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-body">
+      <Content />
+    </div>
+
+    <div class="case-actions">
+      {project.data.repo && (
+        <a class="btn btn-primary" href={project.data.repo}>REPO ↗</a>
+      )}
+      {project.data.demo && (
+        <a class="btn btn-outline" href={project.data.demo}>LIVE DEMO ↗</a>
+      )}
+      <a class="back-link" href="/projects">❯ cd ~/projects</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.case-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-hero {
+  position: relative;
+  padding: 64px 72px 56px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ctp-border);
+}
+
+.case-number {
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 260px;
+  line-height: 0.85;
+  letter-spacing: -10px;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(237, 135, 150, 0.22);
+  user-select: none;
+}
+
+.hero-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+}
+
+.case-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+.case-prompt .prompt { color: var(--ctp-red); }
+.case-prompt .cmd { color: var(--ctp-green); }
+
+.case-title {
+  margin: 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 1.15;
+  color: var(--ctp-text);
+}
+
+.case-meta {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ctp-muted);
+}
+
+.case-meta .context { color: var(--ctp-peach); }
+
+.case-meta .tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.stack-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ctp-peach);
+  border: 1px solid rgba(245, 169, 127, 0.35);
+  padding: 3px 8px;
+}
+
+.case-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 28px 40px;
+  padding: 56px 72px 8px;
+}
+
+.case-body :global(h2) {
+  grid-column: 1;
+  margin: 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--ctp-text);
+}
+
+.case-body :global(h2 .jp) {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--ctp-red);
+}
+
+/* intro paragraph doubles as the /projects index hook - hidden here, hero covers it */
+.case-body :global(> p:first-child) {
+  display: none;
+}
+
+.case-body :global(pre) {
+  grid-column: 2;
+  margin: 0;
+  max-width: 68ch;
+  border: 1px solid var(--ctp-border);
+  border-left: 3px solid var(--ctp-peach);
+  padding: 24px 28px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.case-body :global([id^='構造'] + p) {
+  max-width: none;
+  border: 1px solid var(--ctp-border);
+  border-left: 3px solid var(--ctp-peach);
+  background: var(--ctp-mantle);
+  padding: 24px 28px;
+}
+
+.case-body :global([id^='反省'] + p) {
+  border-left: 3px solid var(--ctp-red);
+  background: rgba(237, 135, 150, 0.06);
+  padding: 20px 26px;
+}
+
+.case-body :global(p),
+.case-body :global(ul) {
+  grid-column: 2;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ctp-subtext);
+  max-width: 68ch;
+}
+
+.case-body :global(ul) {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.case-body :global(li) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  background: var(--ctp-mantle);
+  padding: 18px 24px;
+  font-size: 14px;
+  line-height: 1.7;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+}
+
+.case-body :global(strong) {
+  color: var(--ctp-text);
+}
+
+.case-body :global(li strong) {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ctp-red);
+}
+
+.case-body :global(a) {
+  color: var(--ctp-red);
+  transition: color 0.2s;
+}
+
+.case-body :global(a:hover) {
+  color: var(--ctp-peach);
+  text-decoration: underline;
+}
+
+.case-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 40px 72px 64px;
+}
+
+.back-link {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ctp-muted);
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--ctp-peach); }
+
+@media (max-width: 1080px) {
+  .case-hero { padding: 56px 56px 48px; }
+  .case-title { font-size: 40px; }
+  .case-number { font-size: 200px; }
+  .case-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 48px 56px 8px;
+  }
+  .case-body :global(h2),
+  .case-body :global(p),
+  .case-body :global(ul),
+  .case-body :global(pre) { grid-column: 1; max-width: none; }
+  .case-body :global(h2) { margin-top: 24px; }
+  .case-body :global(h2:first-child) { margin-top: 0; }
+  .case-actions { padding: 40px 56px 56px; }
+}
+
+@media (max-width: 760px) {
+  .case-hero { padding: 40px 24px 32px; }
+  .case-body :global(li) { grid-template-columns: 1fr; gap: 6px; }
+  .case-title { font-size: 30px; }
+  .case-number { font-size: 130px; top: -20px; right: -14px; letter-spacing: -6px; }
+  .case-body { padding: 40px 24px 8px; }
+  .case-actions { padding: 32px 24px 48px; }
+}
+</style>

@@ -19,12 +19,8 @@ Ansible playbooks own package installs and symlinking; configs live in `~/dotfil
 
 ## 判断 Key decisions
 
-- **D-01**: Ansible over a shell-script installer - idempotent re-runs instead of "did I already do this."
+- **D-01** Ansible over a shell-script installer - idempotent re-runs instead of "did I already do this."
 
 ## 反省 What I'd do differently
 
 Split machine-specific overrides (desktop vs. ThinkPad) into their own inventory group earlier instead of branching inline in tasks.
-
-## Links
-
-- [Repo](https://github.com/duu261/dotfiles)
