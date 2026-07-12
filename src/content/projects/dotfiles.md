@@ -4,6 +4,7 @@ role: daily driver
 stack: [arch, hyprland, ansible]
 repo: https://github.com/duu261/dotfiles
 order: 2
+summary: Arch + Hyprland + Neovim + tmux config, Ansible-managed.
 ---
 
 Arch + Hyprland + Neovim + tmux, managed with Ansible so a fresh machine is one playbook away from daily-driver ready.

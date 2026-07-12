@@ -4,6 +4,7 @@ role: hardware
 stack: [zmk, nrf52840, c]
 repo: https://github.com/duu261/zmk-keyboard-cornix
 order: 3
+summary: Converted a stock split keyboard to ZMK; built a wireless nRF52840 dongle receiver from scratch.
 ---
 
 Converted a stock RMK split keyboard to ZMK, then built a wireless nRF52840 dongle receiver for it from scratch.

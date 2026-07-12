@@ -1,31 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
 const ticker = ['SPRING BOOT', 'ARCH LINUX', 'NEOVIM + TMUX', 'ZMK / NRF52840', '日本語 studying'];
 
-const work = [
-  {
-    num: '01',
-    title: 'ParkMaster - Parking Building Management System',
-    desc: 'Spring Boot + PostgreSQL + React/Vite. FPT SWP391 capstone: JWT auth, AI slot allocation, VNPay payments.',
-    stack: 'spring-boot · postgresql · react',
-    href: 'https://github.com/duu261/Parking-Building-Management-System',
-  },
-  {
-    num: '02',
-    title: 'Dotfiles',
-    desc: 'Arch + Hyprland + Neovim + tmux config, Ansible-managed.',
-    stack: 'arch · hyprland · ansible',
-    href: 'https://github.com/duu261/dotfiles',
-  },
-  {
-    num: '03',
-    title: 'ZMK Cornix + Snake Dongle',
-    desc: 'Converted a stock split keyboard to ZMK; built a wireless nRF52840 dongle receiver from scratch.',
-    stack: 'zmk · nrf52840 · c',
-    href: 'https://github.com/duu261/zmk-keyboard-cornix',
-  },
-];
+const work = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((p) => ({
+    num: String(p.data.order).padStart(2, '0'),
+    title: p.data.title,
+    desc: p.data.summary,
+    stack: p.data.stack.join(' · '),
+    href: p.data.repo ?? `/projects/${p.id}`,
+  }));
 
 const posts = [
   { title: 'How I run a multi-agent Claude Code setup (orchestrator → workers)', date: '2026.07' },

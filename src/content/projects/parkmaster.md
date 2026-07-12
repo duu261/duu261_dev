@@ -4,6 +4,7 @@ role: team project
 stack: [spring-boot, postgresql, jwt]
 repo: https://github.com/duu261/Parking-Building-Management-System
 order: 1
+summary: "Spring Boot + PostgreSQL + React/Vite. FPT SWP391 capstone: JWT auth, AI slot allocation, VNPay payments."
 ---
 
 A parking building runs on spreadsheets and shouting. We built the backend that replaces both - slots, sessions, billing, gate events.
