@@ -1,15 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const cmd = `cd ${Astro.url.pathname}`;
 ---
 
 <Layout title="404">
-  <section class="notfound">
+  <section class="notfound hud-grid-bg">
     <div class="hero-scanline"></div>
     <div class="nf-glow"></div>
     <div class="nf-jp">信号喪失</div>
-    <div class="hero-whoami">
+    <div class="page-prompt" style={`--cmd-w: ${cmd.length}ch; --cmd-steps: ${cmd.length};`}>
       <span class="prompt">❯</span>
-      <span class="path-cmd">cd {Astro.url.pathname}</span>
+      <span class="cmd">{cmd}</span>
     </div>
     <h1 class="notfound-code">404</h1>
     <p class="notfound-msg">cd: no such file or directory: {Astro.url.pathname}</p>
@@ -38,7 +40,6 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1; writing-mode: vertical-rl; letter-spacing: 12px;
     color: rgba(237, 135, 150, 0.12); user-select: none; pointer-events: none;
   }
-  .path-cmd { font-family: var(--font-mono); font-size: 14px; color: var(--ctp-green); }
   .notfound-code {
     margin: 0;
     font-family: var(--font-body); font-weight: 900; font-size: clamp(96px, 18vw, 200px);
