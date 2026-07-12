@@ -4,13 +4,17 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="404">
   <section class="notfound">
+    <div class="hero-scanline"></div>
+    <div class="nf-glow"></div>
+    <div class="nf-jp">信号喪失</div>
     <div class="hero-whoami">
       <span class="prompt">❯</span>
       <span class="path-cmd">cd {Astro.url.pathname}</span>
     </div>
     <h1 class="notfound-code">404</h1>
+    <p class="notfound-msg">cd: no such file or directory: {Astro.url.pathname}</p>
     <p class="notfound-msg">
-      <span class="warn">警告 WARNING</span> - no such file or directory. Signal lost.
+      <span class="warn">警告 WARNING</span> - signal lost. exit code 1.
     </p>
     <a class="btn btn-primary" href="/">cd ~/</a>
   </section>
@@ -18,9 +22,21 @@ import Layout from '../layouts/Layout.astro';
 
 <style>
   .notfound {
-    min-height: 60vh;
+    flex: 1;
+    position: relative; overflow: hidden;
     display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
     gap: 20px; padding: 72px;
+  }
+  .nf-glow {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 55%;
+    background: radial-gradient(ellipse at 75% 50%, rgba(237,135,150,0.18), transparent 65%);
+    pointer-events: none;
+  }
+  .nf-jp {
+    position: absolute; top: 50%; right: 4%; transform: translateY(-50%);
+    font-family: var(--font-heading-jp); font-weight: 800; font-size: clamp(80px, 14vw, 170px);
+    line-height: 1; writing-mode: vertical-rl; letter-spacing: 12px;
+    color: rgba(237, 135, 150, 0.12); user-select: none; pointer-events: none;
   }
   .path-cmd { font-family: var(--font-mono); font-size: 14px; color: var(--ctp-green); }
   .notfound-code {
@@ -31,6 +47,10 @@ import Layout from '../layouts/Layout.astro';
   }
   .notfound-msg { margin: 0; font-family: var(--font-mono); font-size: 13px; color: var(--ctp-subtext); }
   .notfound-msg .warn { color: var(--accent-primary); letter-spacing: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .notfound-msg .warn { animation: atblink 1.6s steps(1) infinite; }
+    .nf-glow { animation: glowpulse 5s ease-in-out infinite; }
+  }
   @media (max-width: 760px) {
     .notfound { padding: 48px 24px; }
   }

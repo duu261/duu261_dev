@@ -2,12 +2,23 @@
 
 body {
   margin: 0;
-  background: var(--ctp-mantle);
+  background: #14151f; /* canvas behind the page frame, darker than frame chrome */
   color: var(--ctp-text);
   font-family: var(--font-body);
 }
 
 a { color: inherit; text-decoration: none; }
+
+::selection { background: rgba(237, 135, 150, 0.85); color: var(--ctp-crust); }
+
+* { scrollbar-width: thin; scrollbar-color: var(--ctp-border) var(--ctp-crust); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--ctp-crust); }
+::-webkit-scrollbar-thumb { background: var(--ctp-border); }
+::-webkit-scrollbar-thumb:hover { background: var(--ctp-muted); }
+
+main { flex: 1; display: flex; flex-direction: column; }
+main > * { flex-shrink: 0; }
 
 :focus-visible {
   outline: 2px solid var(--accent-primary);
@@ -17,6 +28,9 @@ a { color: inherit; text-decoration: none; }
 .page-frame {
   max-width: 1320px;
   margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   border-left: 1px solid var(--ctp-border);
   border-right: 1px solid var(--ctp-border);
   background: var(--ctp-crust);
@@ -78,7 +92,7 @@ a { color: inherit; text-decoration: none; }
   padding: 16px 72px 20px;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .site-footer .magi {
@@ -249,7 +263,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 0 14px rgba(237,135,150,0.8); animation: syncpulse 1.6s ease-in-out infinite;
 }
 .hud-readout {
-  position: absolute; font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--ctp-muted);
+  position: absolute; font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--ctp-subtext);
 }
 .hud-readout.tl { top: 8px; left: 36px; }
 .hud-readout.tr { top: 8px; right: 36px; }
@@ -278,6 +292,9 @@ a { color: inherit; text-decoration: none; }
 }
 .fastfetch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 48px; font-size: 13px; line-height: 1.7; flex: 1; }
 .fastfetch-grid .key { color: var(--ctp-peach); font-weight: 600; }
+.fastfetch-host { grid-column: 1 / -1; }
+.fastfetch-host .key { color: var(--accent-primary); }
+.fastfetch-rule { grid-column: 1 / -1; color: var(--ctp-muted); margin-bottom: 4px; user-select: none; }
 .fastfetch-grid .sep { color: var(--ctp-muted); }
 .fastfetch-grid .val { color: var(--ctp-text); }
 .fastfetch-swatches { grid-column: 1 / -1; display: flex; gap: 6px; margin-top: 10px; align-items: center; }
@@ -289,10 +306,10 @@ a { color: inherit; text-decoration: none; }
 .ticker-wrap { border-top: 1px solid var(--ctp-border); border-bottom: 1px solid var(--ctp-border); background: var(--ctp-mantle); padding: 10px 0; }
 .ticker-inner { padding: 0 72px; overflow: hidden; }
 .ticker {
-  /* 105s ≈ 20px/s at current content width (~2110px per loop) — matches stripe
+  /* 85s ≈ 20px/s at current content width (~1690px per loop) — matches stripe
      crawl speed; retune duration if ticker text changes length */
-  display: flex; white-space: nowrap; width: max-content; animation: tickermove 105s linear infinite;
-  font-family: var(--font-mono); font-size: 12px; letter-spacing: 3px; color: var(--ctp-muted);
+  display: flex; white-space: nowrap; width: max-content; animation: tickermove 85s linear infinite;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 3px; color: var(--ctp-subtext);
 }
 .ticker span { padding: 0 28px; }
 .ticker .warn { color: var(--accent-primary); }
@@ -305,7 +322,10 @@ a { color: inherit; text-decoration: none; }
 .section-head .jp { font-family: var(--font-mono); font-size: 11px; color: var(--accent-primary); letter-spacing: 3px; }
 .section-head .rule { flex: 1; height: 6px; background: repeating-linear-gradient(-45deg, rgba(237,135,150,0.35) 0 8px, transparent 7px 16px); }
 
-.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.work-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; }
+.work-card.featured { grid-row: span 2; padding: 32px; }
+.work-card.featured .title { font-size: 24px; min-height: 0; }
+.work-card.featured p { font-size: 14px; }
 .work-card {
   background: var(--ctp-mantle); border-top: 3px solid var(--accent-primary); padding: 24px;
   display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s, background 0.2s;
@@ -313,7 +333,22 @@ a { color: inherit; text-decoration: none; }
 }
 .work-card:hover { background: var(--ctp-base); transform: translateY(-4px); }
 .work-card .num { font-family: var(--font-mono); font-size: 11px; color: var(--accent-primary); }
-.work-card .title { font-size: 17px; font-weight: 700; line-height: 1.3; min-height: 2.6em; color: var(--ctp-text); }
+.work-card.unit02 { border-top-color: var(--ctp-peach); position: relative; overflow: hidden; }
+.work-card.unit02::after {
+  content: '02';
+  position: absolute; right: 4px; bottom: -18px;
+  font-family: var(--font-body); font-weight: 900; font-size: 110px; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(245, 169, 127, 0.22);
+  pointer-events: none;
+}
+.work-card.unit02 .num { color: var(--ctp-peach); }
+.work-card.unit02 .jp-tag {
+  margin-left: 10px; padding: 1px 6px;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--ctp-peach); border: 1px solid rgba(245, 169, 127, 0.4);
+}
+.work-card.unit02:hover { box-shadow: 0 0 18px rgba(245, 169, 127, 0.18); }
+.work-card .title { font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--ctp-text); }
 .work-card p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ctp-subtext); flex: 1; }
 .work-card .stack { font-family: var(--font-mono); font-size: 11px; color: var(--ctp-muted); }
 
@@ -326,7 +361,7 @@ a { color: inherit; text-decoration: none; }
 .writing-row .date { font-family: var(--font-mono); font-size: 12px; color: var(--ctp-muted); }
 
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes atblink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+  @keyframes atblink { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
   /* shift = one gradient period × √2: stops are measured along the -45deg
      gradient axis, so the horizontal repeat distance is period·√2 */
   @keyframes stripeslide-32 { to { transform: translateX(-45.2548px); } }
@@ -364,9 +399,11 @@ a { color: inherit; text-decoration: none; }
   .ticker-inner { padding: 0 24px; }
   .section-block { padding: 40px 24px 56px; }
   .work-grid { grid-template-columns: 1fr; }
-  .work-card .title { min-height: 0; }
+  .work-card.featured { grid-row: auto; padding: 24px; }
   .fastfetch { flex-direction: column; gap: 20px; padding: 20px; }
   .fastfetch-grid { grid-template-columns: 1fr; }
+  .fastfetch-swatches { flex-wrap: wrap; }
+  .fastfetch-status { margin-left: 0; flex-basis: 100%; }
   .writing-row { flex-direction: column; gap: 4px; }
   .site-footer { flex-direction: column; gap: 10px; padding: 16px 24px 20px; text-align: center; }
 }
