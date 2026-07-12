@@ -13,10 +13,8 @@ const tagStyles = {
 const tags = Object.keys(tagStyles) as Array<keyof typeof tagStyles>;
 
 const posts = (await getCollection('blog'))
-  .sort((a, b) => {
-    if (a.data.draft !== b.data.draft) return Number(a.data.draft) - Number(b.data.draft);
-    return b.data.date.valueOf() - a.data.date.valueOf();
-  });
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const formatMonth = (date: Date) =>
   `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
