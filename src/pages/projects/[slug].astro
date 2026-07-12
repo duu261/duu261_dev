@@ -121,7 +121,7 @@ const number = String(project.data.order).padStart(2, '0');
   flex-wrap: wrap;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .case-meta .context { color: var(--ctp-peach); }
@@ -217,7 +217,7 @@ const number = String(project.data.order).padStart(2, '0');
   gap: 14px;
 }
 
-.case-body :global(li) {
+.case-body :global(ul > li) {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 20px;
@@ -232,10 +232,142 @@ const number = String(project.data.order).padStart(2, '0');
   color: var(--ctp-text);
 }
 
-.case-body :global(li strong) {
+.case-body :global(ul > li strong) {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--ctp-red);
+}
+
+.case-body :global(h3) {
+  grid-column: 2;
+  margin: 8px 0 0;
+  max-width: 68ch;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--ctp-text);
+}
+
+.case-body :global(h4) {
+  grid-column: 2;
+  margin: 4px 0 0;
+  max-width: 68ch;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ctp-subtext);
+}
+
+.case-body :global(code) {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ctp-peach);
+  background: rgba(245, 169, 127, 0.08);
+  padding: 2px 6px;
+}
+
+.case-body :global(pre code) {
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+.case-body :global(ol) {
+  grid-column: 2;
+  margin: 0;
+  max-width: 68ch;
+  padding: 0;
+  list-style: none;
+  counter-reset: case-ol;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ctp-subtext);
+}
+
+.case-body :global(ol > li) {
+  counter-increment: case-ol;
+  position: relative;
+  padding-left: 34px;
+}
+
+.case-body :global(ol > li::before) {
+  content: counter(case-ol, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ctp-peach);
+}
+
+.case-body :global(hr) {
+  grid-column: 2;
+  max-width: 68ch;
+  width: 100%;
+  margin: 8px 0;
+  border: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 8px;
+  color: var(--ctp-muted);
+}
+
+.case-body :global(hr::before) {
+  content: '· · ·';
+}
+
+.case-body :global(table) {
+  grid-column: 2;
+  max-width: 68ch;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--ctp-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.case-body :global(th) {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ctp-subtext);
+  background: var(--ctp-mantle);
+}
+
+.case-body :global(th),
+.case-body :global(td) {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ctp-border);
+  color: var(--ctp-subtext);
+}
+
+.case-body :global(img) {
+  display: block;
+  max-width: 100%;
+  border: 1px solid var(--ctp-border);
+}
+
+.case-body :global(blockquote) {
+  grid-column: 2;
+  margin: 0;
+  max-width: 68ch;
+  border-left: 3px solid var(--ctp-red);
+  background: rgba(237, 135, 150, 0.06);
+  padding: 20px 26px;
+}
+
+.case-body :global(blockquote p) {
+  max-width: none;
 }
 
 .case-body :global(a) {
@@ -260,7 +392,7 @@ const number = String(project.data.order).padStart(2, '0');
   margin-left: 8px;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
   transition: color 0.2s;
 }
 
@@ -276,8 +408,14 @@ const number = String(project.data.order).padStart(2, '0');
     padding: 48px 56px 8px;
   }
   .case-body :global(h2),
+  .case-body :global(h3),
+  .case-body :global(h4),
   .case-body :global(p),
   .case-body :global(ul),
+  .case-body :global(ol),
+  .case-body :global(hr),
+  .case-body :global(table),
+  .case-body :global(blockquote),
   .case-body :global(pre) { grid-column: 1; max-width: none; }
   .case-body :global(h2) { margin-top: 24px; }
   .case-body :global(h2:first-child) { margin-top: 0; }
@@ -286,7 +424,7 @@ const number = String(project.data.order).padStart(2, '0');
 
 @media (max-width: 760px) {
   .case-hero { padding: 40px 24px 32px; }
-  .case-body :global(li) { grid-template-columns: 1fr; gap: 6px; }
+  .case-body :global(ul > li) { grid-template-columns: 1fr; gap: 6px; }
   .case-title { font-size: 30px; }
   .case-number { font-size: 130px; top: -20px; right: -14px; letter-spacing: -6px; }
   .case-body { padding: 40px 24px 8px; }

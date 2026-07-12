@@ -62,3 +62,28 @@ green #a6da95 · text #cad3f5 · muted #6e738d · bg #24273a / #1e2030.
   `> **警告 WAR STORY -** One sentence.`
 - Blog diagram: fenced ```blog-diagram block. Same arrow coloring as diagrams,
   but no special blue final line, so all rows stay visually consistent.
+
+## Markdown coverage (blog + projects)
+
+Every standard construct is themed on both templates - write plain markdown and
+it lands on-style. Projects keep their own extras (decision cards, boxed
+構造/反省 paragraphs, blue-final-line txt diagrams); blog keeps file panels and
+blog-diagram:
+
+| construct | renders as |
+| --------- | ---------- |
+| `## h2` | Shippori heading with red ❯ prompt |
+| `### h3` | smaller Shippori heading, no prompt |
+| `#### h4` | small mono uppercase label |
+| `- item` | red ▸ bullets |
+| `1. item` | peach `01` `02` mono counters |
+| `**bold**` | brighter text weight 700 |
+| `` `code` `` | peach inline chip |
+| `[link](url)` | peach underline, red on hover |
+| `---` | centered `· · ·` divider |
+| tables | mono, bordered, mono uppercase header row |
+| ` ```lang ` | Catppuccin-highlighted panel, peach left edge |
+| images | full-width, thin border |
+| `> quote` | red-edged callout; bold **first** word set styles the 警告 label |
+
+Stress page with every construct once: `/blog/dummy-template-check`.

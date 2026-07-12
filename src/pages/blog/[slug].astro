@@ -119,7 +119,7 @@ h1 {
   flex-wrap: wrap;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .post-meta .context {
@@ -194,7 +194,8 @@ h1 {
   margin: 0;
   border: 1px solid var(--ctp-border);
   border-left: 3px solid var(--ctp-peach);
-  background: var(--ctp-mantle);
+  /* !important: shiki inlines its own background-color on the pre */
+  background: var(--ctp-mantle) !important;
   padding: 24px 28px;
   font-family: var(--font-mono);
   font-size: 13px;
@@ -230,7 +231,7 @@ h1 {
   border-bottom: 1px solid var(--ctp-border);
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .post-body :global(.file-panel-bar .status) {
@@ -281,12 +282,119 @@ h1 {
   font-size: 15px;
 }
 
-.post-body :global(blockquote strong) {
+/* war-story label only: first bold of the quote's first paragraph */
+.post-body :global(blockquote > p:first-child > strong:first-child) {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 2px;
   color: var(--ctp-red);
+}
+
+.post-body :global(h3) {
+  margin: 12px 0 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--ctp-text);
+}
+
+.post-body :global(h4) {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(ol) {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+  counter-reset: post-ol;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(ol > li) {
+  counter-increment: post-ol;
+  padding-left: 34px;
+}
+
+.post-body :global(ol > li::before) {
+  content: counter(post-ol, decimal-leading-zero);
+  color: var(--ctp-peach);
+  font-size: 13px;
+}
+
+.post-body :global(hr) {
+  margin: 8px 0;
+  border: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 8px;
+  color: var(--ctp-muted);
+}
+
+.post-body :global(hr::before) {
+  content: '· · ·';
+}
+
+.post-body :global(a) {
+  color: var(--ctp-peach);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245, 169, 127, 0.4);
+  transition: color 0.2s;
+}
+
+.post-body :global(a:hover) {
+  color: var(--ctp-red);
+}
+
+.post-body :global(strong) {
+  font-weight: 700;
+  color: var(--ctp-text);
+}
+
+.post-body :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--ctp-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.post-body :global(th) {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ctp-subtext);
+  background: var(--ctp-mantle);
+}
+
+.post-body :global(th),
+.post-body :global(td) {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ctp-border);
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(img) {
+  display: block;
+  max-width: 100%;
+  border: 1px solid var(--ctp-border);
 }
 
 .post-body :global(.war-label) {
@@ -305,7 +413,7 @@ h1 {
 .back-link {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
   transition: color 0.2s;
 }
 
