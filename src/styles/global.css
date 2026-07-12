@@ -109,6 +109,7 @@ main > * { flex-shrink: 0; }
 }
 
 .site-footer .magi-badge {
+  white-space: nowrap;
   color: var(--ctp-green);
   border: 1px solid rgba(166, 218, 149, 0.4);
   background: rgba(166, 218, 149, 0.08);
