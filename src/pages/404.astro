@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404">
+  <section class="notfound">
+    <div class="hero-whoami">
+      <span class="prompt">❯</span>
+      <span class="path-cmd">cd {Astro.url.pathname}</span>
+    </div>
+    <h1 class="notfound-code">404</h1>
+    <p class="notfound-msg">
+      <span class="warn">警告 WARNING</span> - no such file or directory. Signal lost.
+    </p>
+    <a class="btn btn-primary" href="/">cd ~/</a>
+  </section>
+</Layout>
+
+<style>
+  .notfound {
+    min-height: 60vh;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+    gap: 20px; padding: 72px;
+  }
+  .path-cmd { font-family: var(--font-mono); font-size: 14px; color: var(--ctp-green); }
+  .notfound-code {
+    margin: 0;
+    font-family: var(--font-body); font-weight: 900; font-size: clamp(96px, 18vw, 200px);
+    line-height: 0.9; color: transparent;
+    -webkit-text-stroke: 2px rgba(237, 135, 150, 0.6);
+  }
+  .notfound-msg { margin: 0; font-family: var(--font-mono); font-size: 13px; color: var(--ctp-subtext); }
+  .notfound-msg .warn { color: var(--accent-primary); letter-spacing: 2px; }
+  @media (max-width: 760px) {
+    .notfound { padding: 48px 24px; }
+  }
+</style>

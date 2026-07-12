@@ -14,6 +14,17 @@ interface Props {
   title: string;
 }
 const { title } = Astro.props;
+
+const path = Astro.url.pathname;
+const navItems = [
+  { href: '/', label: '~/' },
+  { href: '/projects', label: '~/projects' },
+  { href: '/blog', label: '~/blog' },
+  { href: '/uses', label: '~/uses' },
+  { href: '/about', label: '~/about' },
+];
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
 ---
 <!doctype html>
 <html lang="en">
@@ -21,19 +32,25 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} · Nguyễn Như Vũ</title>
+    <meta name="description" content="Nguyễn Như Vũ (duu261) - Java backend and BrSE student in Ho Chi Minh City. Spring Boot, Arch Linux, Neovim, ZMK keyboards." />
+    <meta property="og:title" content={`${title} · Nguyễn Như Vũ`} />
+    <meta property="og:description" content="Java backend · BrSE student · Ho Chi Minh City." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23181926'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='monospace' font-size='20' font-weight='700' fill='%23ed8796'%3E%E2%9D%AF%3C/text%3E%3C/svg%3E" />
   </head>
   <body>
     <div class="page-frame">
+      <a class="skip-link" href="#main">skip to content</a>
       <nav class="alert-bar">
-        <span class="blink">A.T. FIELD — ACTIVE</span>
-        <a href="/">~/</a>
-        <a href="/projects">~/projects</a>
-        <a href="/blog">~/blog</a>
-        <a href="/uses">~/uses</a>
-        <a href="/about">~/about</a>
+        <span class="blink">A.T. FIELD - ACTIVE</span>
+        {navItems.map((item) => (
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
       </nav>
 
-      <main>
+      <main id="main">
         <slot />
       </main>
 
@@ -47,7 +64,7 @@ const { title } = Astro.props;
           <span class="magi-badge">CASPER 承認</span>
         </span>
         <span class="footer-tagline">
-          <span class="peach">あんたバカ？</span> — ship it anyway. <span class="red">UNIT-02</span>
+          <span class="peach">あんたバカ？</span> - ship it anyway. <span class="red">UNIT-02</span>
         </span>
       </footer>
     </div>

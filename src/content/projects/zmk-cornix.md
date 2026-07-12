@@ -10,7 +10,7 @@ Converted a stock RMK split keyboard to ZMK, then built a wireless nRF52840 dong
 
 ## 問題 Problem
 
-The stock Cornix split keyboard shipped with RMK firmware and no dongle mode — wanted proper ZMK config plus a standalone wireless receiver instead of per-side Bluetooth pairing.
+The stock Cornix split keyboard shipped with RMK firmware and no dongle mode - wanted proper ZMK config plus a standalone wireless receiver instead of per-side Bluetooth pairing.
 
 ## 構造 Architecture
 
@@ -18,8 +18,8 @@ Keyboard side: forked and modified ZMK firmware for the Cornix split. Dongle sid
 
 ## 判断 Key decisions
 
-- **D-01**: Built the dongle hardware from scratch rather than buying an off-the-shelf receiver — full control over case and pinout.
-- **D-02**: Forked firmware for both keyboard and dongle instead of writing from zero — faster to a working baseline, changes layered on top.
+- **D-01**: Built the dongle hardware from scratch rather than buying an off-the-shelf receiver - full control over case and pinout.
+- **D-02**: Forked firmware for both keyboard and dongle instead of writing from zero - faster to a working baseline, changes layered on top.
 
 ## 反省 What I'd do differently
 
