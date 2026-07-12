@@ -67,15 +67,11 @@ const byYear = [...new Set(posts.map((p) => p.data.date.getFullYear()))]
           </div>
           <div class="post-list">
           {yearPosts.map((post) => (
-            <article class:list={['post-row', { draft: post.data.draft }]}>
-              <time datetime={post.data.date.toISOString()}>{post.data.draft ? 'draft' : formatMonth(post.data.date)}</time>
+            <article class="post-row">
+              <time datetime={post.data.date.toISOString()}>{formatMonth(post.data.date)}</time>
               <div class="post-main">
                 <div class="post-head">
-                  {post.data.draft ? (
-                    <span class="draft-title">{post.data.title}</span>
-                  ) : (
-                    <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                  )}
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
                   <span
                     class="post-tag"
                     style={{
@@ -242,12 +238,6 @@ const byYear = [...new Set(posts.map((p) => p.data.date.getFullYear()))]
   transition: color 0.2s;
 }
 
-.draft-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--ctp-muted);
-}
-
 .post-main a:hover {
   color: var(--ctp-peach);
 }
@@ -266,11 +256,6 @@ const byYear = [...new Set(posts.map((p) => p.data.date.getFullYear()))]
   white-space: nowrap;
   padding: 0;
   border: 0;
-}
-
-.post-row.draft .post-main p,
-.post-row.draft .post-tag {
-  color: var(--ctp-muted);
 }
 
 .empty-log {
