@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
-const projectsData = await getCollection('projects');
+const projectsData = (await getCollection('projects')).filter((p) => !p.data.draft);
 const projects = projectsData.sort((a, b) =>
   (a.data.order ?? 999) - (b.data.order ?? 999)
 );
@@ -11,7 +11,7 @@ const projects = projectsData.sort((a, b) =>
 <Layout title="Projects">
   <section class="projects-section">
     <div class="projects-header hud-grid-bg">
-      <div class="projects-watermark">作品</div>
+      <div class="projects-watermark" aria-hidden="true">作品</div>
       <div class="header-content">
         <div class="hero-tag">
           <span class="stripe"><span class="stripe-track"></span></span>
@@ -19,10 +19,10 @@ const projects = projectsData.sort((a, b) =>
         </div>
         <h1 class="projects-title">Projects</h1>
         <p class="projects-tagline">Case studies, not repo links - problem, architecture, tradeoffs, and what I'd change.</p>
-        <div class="projects-prompt">
+        <div class="page-prompt" style="--cmd-w: 13ch; --cmd-steps: 13;">
           <span class="prompt">❯</span>
           <span class="cmd">ls ~/projects</span>
-          <span class="result">- {projects.length} entries</span>
+          <span class="result"># {projects.length} entries</span>
         </div>
       </div>
     </div>
@@ -114,26 +114,6 @@ const projects = projectsData.sort((a, b) =>
   color: var(--ctp-subtext);
 }
 
-.projects-prompt {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 14px;
-}
-
-.projects-prompt .prompt {
-  color: var(--ctp-red);
-}
-
-.projects-prompt .cmd {
-  color: var(--ctp-green);
-}
-
-.projects-prompt .result {
-  color: var(--ctp-muted);
-}
-
 .projects-grid {
   display: flex;
   flex-direction: column;
@@ -191,7 +171,7 @@ const projects = projectsData.sort((a, b) =>
 .card-number .role {
   font-size: 10px;
   letter-spacing: 2px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
   white-space: pre-line;
   line-height: 1.2;
 }

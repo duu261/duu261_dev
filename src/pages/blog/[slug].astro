@@ -1,0 +1,449 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const tagColors = {
+  java: 'var(--ctp-peach)',
+  tools: 'var(--ctp-mauve)',
+  linux: 'var(--ctp-blue)',
+  brse: 'var(--ctp-green)',
+  hardware: 'var(--ctp-yellow)',
+};
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((post) => !post.data.draft)
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = post.data.date.toISOString().slice(0, 10).replaceAll('-', '.');
+---
+
+<Layout title={post.data.title}>
+  <article class="post-section">
+    <header class="post-hero hud-grid-bg">
+      <div class="post-content">
+        <div class="post-prompt">
+          <span class="prompt">❯</span>
+          <span class="cmd">cat ~/blog/{post.id}.md</span>
+        </div>
+        <h1>{post.data.title}</h1>
+        <div class="post-meta">
+          <time datetime={post.data.date.toISOString()}>{date}</time>
+          <span>·</span>
+          <span style={{ color: tagColors[post.data.tag] }}>{post.data.tag}</span>
+          {post.data.readTime && (
+            <>
+              <span>·</span>
+              <span>{post.data.readTime}</span>
+            </>
+          )}
+          {post.data.context && (
+            <>
+              <span>·</span>
+              <span class="context">{post.data.context}</span>
+            </>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <div class="post-body">
+      <p class="post-hook">{post.data.hook}</p>
+      <Content />
+    </div>
+
+    <nav class="post-actions" aria-label="Post navigation">
+      <a class="back-link" href="/blog">❯ cd ~/blog</a>
+    </nav>
+  </article>
+</Layout>
+
+<style>
+.post-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 56px 72px 0;
+}
+
+.post-content {
+  width: min(720px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 42px;
+}
+
+.post-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.post-prompt .prompt {
+  color: var(--ctp-red);
+}
+
+.post-prompt .cmd {
+  color: var(--ctp-green);
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1.25;
+  color: var(--ctp-text);
+}
+
+.post-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ctp-subtext);
+}
+
+.post-meta .context {
+  color: var(--ctp-peach);
+}
+
+.post-body {
+  width: min(720px, calc(100% - 144px));
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 0 0 8px;
+}
+
+.post-hook {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(h2) {
+  margin: 20px 0 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--ctp-text);
+}
+
+.post-body :global(h2::before) {
+  content: '❯';
+  margin-right: 12px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--ctp-red);
+}
+
+.post-body :global(p),
+.post-body :global(ul) {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(ul) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.post-body :global(li) {
+  position: relative;
+  padding-left: 22px;
+  background: transparent;
+  border-left: 0;
+}
+
+.post-body :global(li::before) {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--ctp-red);
+  font-family: var(--font-mono);
+}
+
+.post-body :global(pre) {
+  margin: 0;
+  border: 1px solid var(--ctp-border);
+  border-left: 3px solid var(--ctp-peach);
+  /* !important: shiki inlines its own background-color on the pre */
+  background: var(--ctp-mantle) !important;
+  padding: 24px 28px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.post-body :global(code) {
+  font-family: var(--font-mono);
+  color: var(--ctp-peach);
+  background: rgba(245, 169, 127, 0.08);
+  padding: 2px 6px;
+}
+
+.post-body :global(pre code) {
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+.post-body :global(.file-panel) {
+  border: 1px solid var(--ctp-border);
+  border-left: 3px solid var(--ctp-peach);
+  background: var(--ctp-mantle);
+  overflow: hidden;
+}
+
+.post-body :global(.file-panel-bar) {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--ctp-border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(.file-panel-bar .status) {
+  color: var(--ctp-green);
+}
+
+.post-body :global(.file-panel pre) {
+  border: 0;
+  border-left: 0;
+  background: transparent;
+  padding: 22px 26px;
+}
+
+.post-body :global(.file-code) {
+  padding: 22px 26px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ctp-text);
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.post-body :global(.file-code .file-comment) {
+  color: var(--ctp-muted);
+}
+
+.post-body :global(.file-code .file-key) {
+  color: var(--ctp-peach);
+}
+
+.post-body :global(.file-code .file-value) {
+  color: var(--ctp-blue);
+}
+
+.post-body :global(.file-code .file-bullet) {
+  color: var(--ctp-red);
+}
+
+.post-body :global(blockquote) {
+  margin: 0;
+  border-left: 3px solid var(--ctp-red);
+  background: rgba(237, 135, 150, 0.06);
+  padding: 20px 26px;
+}
+
+.post-body :global(blockquote p) {
+  font-size: 15px;
+}
+
+/* war-story label only: first bold of the quote's first paragraph */
+.post-body :global(blockquote > p:first-child > strong:first-child) {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--ctp-red);
+}
+
+.post-body :global(h3) {
+  margin: 12px 0 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--ctp-text);
+}
+
+.post-body :global(h4) {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(ol) {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+  counter-reset: post-ol;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(ol > li) {
+  counter-increment: post-ol;
+  padding-left: 34px;
+}
+
+.post-body :global(ol > li::before) {
+  content: counter(post-ol, decimal-leading-zero);
+  color: var(--ctp-peach);
+  font-size: 13px;
+}
+
+.post-body :global(hr) {
+  margin: 8px 0;
+  border: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 8px;
+  color: var(--ctp-muted);
+}
+
+.post-body :global(hr::before) {
+  content: '· · ·';
+}
+
+.post-body :global(a) {
+  color: var(--ctp-peach);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245, 169, 127, 0.4);
+  transition: color 0.2s;
+}
+
+.post-body :global(a:hover) {
+  color: var(--ctp-red);
+}
+
+.post-body :global(strong) {
+  font-weight: 700;
+  color: var(--ctp-text);
+}
+
+.post-body :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--ctp-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.post-body :global(th) {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ctp-subtext);
+  background: var(--ctp-mantle);
+}
+
+.post-body :global(th),
+.post-body :global(td) {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ctp-border);
+  color: var(--ctp-subtext);
+}
+
+.post-body :global(img) {
+  display: block;
+  max-width: 100%;
+  border: 1px solid var(--ctp-border);
+}
+
+.post-body :global(.war-label) {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--ctp-red);
+}
+
+.post-actions {
+  width: min(720px, calc(100% - 144px));
+  margin: 0 auto;
+  padding: 40px 0 64px;
+}
+
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ctp-subtext);
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--ctp-peach);
+}
+
+@media (max-width: 1080px) {
+  .post-hero {
+    padding: 48px 56px 0;
+  }
+
+  .post-body,
+  .post-actions {
+    width: calc(100% - 112px);
+  }
+}
+
+@media (max-width: 760px) {
+  .post-hero {
+    padding: 36px 24px 0;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .post-body,
+  .post-actions {
+    width: calc(100% - 48px);
+  }
+}
+</style>

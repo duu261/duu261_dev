@@ -4,6 +4,7 @@ role: hardware
 stack: [demo]
 order: 99
 summary: Throwaway page to preview a real SVG diagram next to an ASCII one. Delete me.
+draft: true
 ---
 
 Throwaway page comparing diagram styles. Delete after viewing.

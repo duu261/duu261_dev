@@ -1,15 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const cmd = `cd ${Astro.url.pathname}`;
 ---
 
 <Layout title="404">
   <section class="notfound">
+    <div class="nf-grid hud-grid-bg" aria-hidden="true"></div>
     <div class="hero-scanline"></div>
     <div class="nf-glow"></div>
-    <div class="nf-jp">信号喪失</div>
-    <div class="hero-whoami">
+    <div class="nf-jp" aria-hidden="true">信号喪失</div>
+    <div class="page-prompt" style={`--cmd-w: ${cmd.length}ch; --cmd-steps: ${cmd.length};`}>
       <span class="prompt">❯</span>
-      <span class="path-cmd">cd {Astro.url.pathname}</span>
+      <span class="cmd">{cmd}</span>
     </div>
     <h1 class="notfound-code">404</h1>
     <p class="notfound-msg">cd: no such file or directory: {Astro.url.pathname}</p>
@@ -27,6 +30,13 @@ import Layout from '../layouts/Layout.astro';
     display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
     gap: 20px; padding: 72px;
   }
+  /* grid stays header-zone only per design system; fade out before content midline */
+  .nf-grid {
+    position: absolute; inset: 0 0 auto; height: 42%;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(#000 55%, transparent);
+    mask-image: linear-gradient(#000 55%, transparent);
+  }
   .nf-glow {
     position: absolute; top: 0; right: 0; bottom: 0; width: 55%;
     background: radial-gradient(ellipse at 75% 50%, rgba(237,135,150,0.18), transparent 65%);
@@ -38,7 +48,6 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1; writing-mode: vertical-rl; letter-spacing: 12px;
     color: rgba(237, 135, 150, 0.12); user-select: none; pointer-events: none;
   }
-  .path-cmd { font-family: var(--font-mono); font-size: 14px; color: var(--ctp-green); }
   .notfound-code {
     margin: 0;
     font-family: var(--font-body); font-weight: 900; font-size: clamp(96px, 18vw, 200px);

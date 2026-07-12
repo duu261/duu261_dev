@@ -1,0 +1,363 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const tagStyles = {
+  java: { color: 'var(--ctp-peach)', border: 'rgba(245, 169, 127, 0.35)' },
+  tools: { color: 'var(--ctp-mauve)', border: 'rgba(198, 160, 246, 0.35)' },
+  linux: { color: 'var(--ctp-blue)', border: 'rgba(138, 173, 244, 0.35)' },
+  brse: { color: 'var(--ctp-green)', border: 'rgba(166, 218, 149, 0.35)' },
+  hardware: { color: 'var(--ctp-yellow)', border: 'rgba(238, 212, 159, 0.35)' },
+};
+
+const tags = Object.keys(tagStyles) as Array<keyof typeof tagStyles>;
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatMonth = (date: Date) =>
+  `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+const byYear = [...new Set(posts.map((p) => p.data.date.getFullYear()))]
+  .sort((a, b) => b - a)
+  .map((year) => ({
+    year,
+    posts: posts.filter((p) => p.data.date.getFullYear() === year),
+  }));
+---
+
+<Layout title="Writing">
+  <section class="blog-section">
+    <div class="blog-header hud-grid-bg">
+      <div class="blog-watermark" aria-hidden="true">記録</div>
+      <div class="header-content">
+        <div class="hero-tag">
+          <span class="stripe"><span class="stripe-track"></span></span>
+          <span>DUU261.INDEVS.IN - WRITING</span>
+        </div>
+        <h1 class="blog-title">Writing</h1>
+        <p class="blog-tagline">One post a month. Real configs, real numbers, one diagram minimum.</p>
+        <div class="page-prompt" style="--cmd-w: 9ch; --cmd-steps: 9;">
+          <span class="prompt">❯</span>
+          <span class="cmd">ls ~/blog</span>
+          <span class="result"># {posts.length} posts</span>
+        </div>
+        <div class="tag-rail" aria-label="Blog tags">
+          <span class="tag-label">TAGS</span>
+          {tags.map((tag) => (
+            <span
+              class="tag-pill"
+              style={{ '--tag-color': tagStyles[tag].color, '--tag-border': tagStyles[tag].border }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="archive-wrap">
+      {posts.length > 0 ? (
+        byYear.map(({ year, posts: yearPosts }) => (
+        <div class="year-group">
+          <div class="year-row">
+            <span>{year}</span>
+            <span class="year-rule"></span>
+          </div>
+          <div class="post-list">
+          {yearPosts.map((post) => (
+            <article class="post-row">
+              <time datetime={post.data.date.toISOString()}>{formatMonth(post.data.date)}</time>
+              <div class="post-main">
+                <div class="post-head">
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                  <span
+                    class="post-tag"
+                    style={{
+                      '--tag-color': tagStyles[post.data.tag].color,
+                      '--tag-border': tagStyles[post.data.tag].border,
+                    }}
+                  >
+                    {post.data.tag}
+                  </span>
+                </div>
+                <p>{post.data.hook}</p>
+              </div>
+            </article>
+          ))}
+          </div>
+        </div>
+        ))
+      ) : (
+        <div class="empty-log">
+          <div class="empty-prompt">
+            <span class="prompt">❯</span>
+            <span class="cmd">ls ~/blog</span>
+            <span class="result"># 0 entries</span>
+          </div>
+          <p>No published posts yet. Markdown collection ready at <code>src/content/blog</code>.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+.blog-section {
+  flex: 1;
+}
+
+.blog-header {
+  position: relative;
+  padding: 72px 72px 56px;
+  overflow: hidden;
+}
+
+.header-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.blog-watermark {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 200px;
+  line-height: 1;
+  color: rgba(237, 135, 150, 0.09);
+  user-select: none;
+}
+
+.blog-title {
+  margin: 0;
+  font-family: var(--font-heading-jp);
+  font-weight: 800;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--ctp-text);
+}
+
+.blog-tagline {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ctp-subtext);
+}
+
+.tag-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.tag-label {
+  color: var(--ctp-muted);
+  letter-spacing: 2px;
+}
+
+.tag-pill,
+.post-tag {
+  color: var(--tag-color);
+  border: 1px solid var(--tag-border);
+  padding: 3px 10px;
+}
+
+.archive-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 72px 64px;
+}
+
+.year-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ctp-red);
+}
+
+.year-rule {
+  flex: 1;
+  height: 6px;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(237, 135, 150, 0.35) 0 8px,
+    transparent 8px 16px
+  );
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 24px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--ctp-border);
+}
+
+.post-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.post-row time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ctp-subtext);
+}
+
+.post-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-main a {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ctp-text);
+  transition: color 0.2s;
+}
+
+.post-main a:hover {
+  color: var(--ctp-peach);
+}
+
+.post-main p {
+  margin: 0;
+  max-width: 70ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ctp-subtext);
+}
+
+.post-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  padding: 0;
+  border: 0;
+}
+
+.empty-log {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 32px;
+  border-top: 1px solid var(--ctp-border);
+  border-left: 3px solid var(--ctp-red);
+  background: var(--ctp-mantle);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+}
+
+.empty-prompt {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.empty-prompt .prompt {
+  color: var(--ctp-red);
+}
+
+.empty-prompt .cmd {
+  color: var(--ctp-green);
+}
+
+.empty-prompt .result {
+  color: var(--ctp-subtext);
+}
+
+.empty-log p {
+  margin: 0;
+  color: var(--ctp-subtext);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.empty-log code {
+  font-family: var(--font-mono);
+  color: var(--ctp-peach);
+}
+
+@media (max-width: 1080px) {
+  .blog-header {
+    padding: 56px 56px 48px;
+  }
+
+  .archive-wrap {
+    padding: 0 56px 56px;
+  }
+
+  .blog-title {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 760px) {
+  .blog-header {
+    padding: 40px 24px 32px;
+  }
+
+  .archive-wrap {
+    padding: 0 24px 40px;
+  }
+
+  .blog-watermark {
+    font-size: 120px;
+    top: -20px;
+    right: -10px;
+  }
+
+  .blog-title {
+    font-size: 40px;
+  }
+
+  .tag-rail {
+    align-items: flex-start;
+  }
+
+  .tag-label {
+    width: 100%;
+  }
+
+  .post-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 18px 0;
+  }
+
+  .post-tag {
+    justify-self: start;
+  }
+
+  .empty-log {
+    padding: 20px 16px;
+  }
+
+  .empty-prompt {
+    flex-wrap: wrap;
+  }
+}
+</style>
