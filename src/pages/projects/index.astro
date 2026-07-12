@@ -11,8 +11,10 @@ const projects = projectsData.sort((a, b) =>
 <Layout title="Projects">
   <section class="projects-section hud-grid-bg">
     <div class="projects-header">
-      <div class="header-stripe"><div class="stripe-track"></div></div>
-      <span class="header-tag">DUU261.INDEVS.IN - PROJECTS</span>
+      <div class="hero-tag">
+        <span class="stripe"><span class="stripe-track"></span></span>
+        <span>DUU261.INDEVS.IN - PROJECTS</span>
+      </div>
       <h1 class="projects-title">Projects</h1>
       <p class="projects-tagline">Case studies, not repo links - problem, architecture, tradeoffs, and what I'd change.</p>
       <div class="projects-prompt">
@@ -88,34 +90,6 @@ const projects = projectsData.sort((a, b) =>
   display: flex;
   flex-direction: column;
   gap: 22px;
-}
-
-.header-stripe {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  height: 12px;
-  width: 120px;
-  overflow: hidden;
-}
-
-.stripe-track {
-  display: block;
-  height: 100%;
-  width: calc(100% + 28.2843px);
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--ctp-red) 0 10px,
-    var(--ctp-peach) 10px 20px
-  );
-  animation: stripeslide-20 1.4s linear infinite;
-}
-
-.header-tag {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ctp-red);
-  letter-spacing: 4px;
 }
 
 .projects-title {
@@ -307,10 +281,6 @@ const projects = projectsData.sort((a, b) =>
 
   .projects-title {
     font-size: 40px;
-  }
-
-  .header-stripe {
-    width: 100px;
   }
 
   .project-card {
