@@ -45,6 +45,9 @@ main > * { flex-shrink: 0; }
 }
 
 .alert-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -402,7 +405,7 @@ main > * { flex-shrink: 0; }
 
 @media (max-width: 760px) {
   .alert-bar { padding: 10px 24px; gap: 12px 1rem; flex-wrap: wrap; }
-  .alert-bar .blink { flex-basis: 100%; }
+  .alert-bar .blink { display: none; }
   .hero { padding: 48px 24px 40px; }
   .ticker-inner { padding: 0 24px; }
   .section-block { padding: 40px 24px 56px; }

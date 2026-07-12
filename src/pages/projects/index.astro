@@ -69,6 +69,7 @@ const projects = projectsData.sort((a, b) =>
 <style>
 .projects-section {
   position: relative;
+  flex: 1;
   padding: 72px 72px 64px;
   overflow: hidden;
 }
@@ -153,7 +154,14 @@ const projects = projectsData.sort((a, b) =>
   transform: translateY(-3px);
 }
 
-.project-card.unit02 { border-left-color: var(--ctp-peach); }
+.project-card.unit02 { border-left-color: var(--ctp-peach); position: relative; }
+.project-card.unit02::after {
+  content: '02';
+  position: absolute; right: 4px; bottom: -22px;
+  font-family: var(--font-body); font-weight: 900; font-size: 130px; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(245, 169, 127, 0.22);
+  pointer-events: none;
+}
 .project-card.unit02 .number { color: var(--ctp-peach); }
 .project-card.unit02:hover { box-shadow: 0 0 18px rgba(245, 169, 127, 0.18); }
 .jp-tag {
