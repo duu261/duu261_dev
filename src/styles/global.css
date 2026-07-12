@@ -53,9 +53,12 @@ main > * { flex-shrink: 0; }
 }
 
 .alert-bar .blink {
+  margin-left: auto;
   color: var(--accent-primary);
   animation: atblink 1.6s steps(1) infinite;
 }
+
+.alert-bar .tmux-session { color: var(--ctp-peach); }
 
 .alert-bar a[aria-current='page'] { color: var(--accent-primary); }
 

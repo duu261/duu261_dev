@@ -17,11 +17,11 @@ const { title } = Astro.props;
 
 const path = Astro.url.pathname;
 const navItems = [
-  { href: '/', label: '~/' },
-  { href: '/projects', label: '~/projects' },
-  { href: '/blog', label: '~/blog' },
-  { href: '/uses', label: '~/uses' },
-  { href: '/about', label: '~/about' },
+  { href: '/', label: '~' },
+  { href: '/projects', label: 'projects' },
+  { href: '/blog', label: 'blog' },
+  { href: '/uses', label: 'uses' },
+  { href: '/about', label: 'about' },
 ];
 const isCurrent = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
@@ -42,12 +42,13 @@ const isCurrent = (href: string) =>
     <div class="page-frame">
       <a class="skip-link" href="#main">skip to content</a>
       <nav class="alert-bar">
-        <span class="blink">A.T. FIELD - ACTIVE</span>
-        {navItems.map((item) => (
+        <span class="tmux-session">[unit02]</span>
+        {navItems.map((item, i) => (
           <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-            {item.label}
+            {i}:{item.label}{isCurrent(item.href) ? '*' : ''}
           </a>
         ))}
+        <span class="blink">A.T. FIELD - ACTIVE</span>
       </nav>
 
       <main id="main">
