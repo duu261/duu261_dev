@@ -5,3 +5,4 @@ dist/
 .env.*
 _mockups/
 .thumbnail
+.handoffs/
