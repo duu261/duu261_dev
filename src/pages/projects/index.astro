@@ -9,22 +9,23 @@ const projects = projectsData.sort((a, b) =>
 ---
 
 <Layout title="Projects">
-  <section class="projects-section hud-grid-bg">
-    <div class="projects-header">
-      <div class="hero-tag">
-        <span class="stripe"><span class="stripe-track"></span></span>
-        <span>DUU261.INDEVS.IN - PROJECTS</span>
-      </div>
-      <h1 class="projects-title">Projects</h1>
-      <p class="projects-tagline">Case studies, not repo links - problem, architecture, tradeoffs, and what I'd change.</p>
-      <div class="projects-prompt">
-        <span class="prompt">❯</span>
-        <span class="cmd">ls ~/projects</span>
-        <span class="result">- {projects.length} entries</span>
+  <section class="projects-section">
+    <div class="projects-header hud-grid-bg">
+      <div class="projects-watermark">作品</div>
+      <div class="header-content">
+        <div class="hero-tag">
+          <span class="stripe"><span class="stripe-track"></span></span>
+          <span>DUU261.INDEVS.IN - PROJECTS</span>
+        </div>
+        <h1 class="projects-title">Projects</h1>
+        <p class="projects-tagline">Case studies, not repo links - problem, architecture, tradeoffs, and what I'd change.</p>
+        <div class="projects-prompt">
+          <span class="prompt">❯</span>
+          <span class="cmd">ls ~/projects</span>
+          <span class="result">- {projects.length} entries</span>
+        </div>
       </div>
     </div>
-
-    <div class="projects-watermark">作品</div>
 
     <div class="projects-grid">
       {projects.map((project, idx) => {
@@ -68,10 +69,20 @@ const projects = projectsData.sort((a, b) =>
 
 <style>
 .projects-section {
-  position: relative;
   flex: 1;
+}
+
+.projects-header {
+  position: relative;
   padding: 72px 72px 64px;
   overflow: hidden;
+}
+
+.header-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .projects-watermark {
@@ -84,13 +95,6 @@ const projects = projectsData.sort((a, b) =>
   line-height: 1;
   color: rgba(237, 135, 150, 0.09);
   user-select: none;
-}
-
-.projects-header {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
 }
 
 .projects-title {
@@ -134,7 +138,7 @@ const projects = projectsData.sort((a, b) =>
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-top: 52px;
+  padding: 0 72px 72px;
 }
 
 .project-card {
@@ -242,6 +246,7 @@ const projects = projectsData.sort((a, b) =>
 .card-link {
   font-family: var(--font-mono);
   font-size: 12px;
+  white-space: nowrap;
   color: var(--ctp-red);
   letter-spacing: 1px;
   transition: color 0.2s;
@@ -253,8 +258,12 @@ const projects = projectsData.sort((a, b) =>
 
 /* Mobile responsive */
 @media (max-width: 1080px) {
-  .projects-section {
+  .projects-header {
     padding: 56px 56px 48px;
+  }
+
+  .projects-grid {
+    padding: 0 56px 56px;
   }
 
   .projects-title {
@@ -277,8 +286,12 @@ const projects = projectsData.sort((a, b) =>
 }
 
 @media (max-width: 760px) {
-  .projects-section {
+  .projects-header {
     padding: 40px 24px 32px;
+  }
+
+  .projects-grid {
+    padding: 0 24px 40px;
   }
 
   .projects-watermark {
