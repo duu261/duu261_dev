@@ -134,14 +134,16 @@ const posts = [
   </section>
 
   <div class="ticker-wrap">
-    <div class="ticker">
-      {[...ticker, ...ticker].map((item, i) => (
-        <>
-          <span class="warn">警告 WARNING</span>
-          <span>{item}</span>
-          <span class="dot">◆</span>
-        </>
-      ))}
+    <div class="ticker-inner">
+      <div class="ticker">
+        {[...ticker, ...ticker].map((item, i) => (
+          <>
+            <span class="warn">警告 WARNING</span>
+            <span>{item}</span>
+            <span class="dot">◆</span>
+          </>
+        ))}
+      </div>
     </div>
   </div>
 
