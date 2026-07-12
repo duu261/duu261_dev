@@ -1,0 +1,43 @@
+---
+import '@fontsource/fira-code/400.css';
+import '@fontsource/fira-code/500.css';
+import '@fontsource/archivo/400.css';
+import '@fontsource/archivo/600.css';
+import '@fontsource/shippori-mincho-b1/700.css';
+import '@fontsource/shippori-mincho-b1/800.css';
+import '@fontsource-variable/playfair-display';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · Nguyễn Như Vũ</title>
+  </head>
+  <body>
+    <nav class="alert-bar">
+      <span class="blink">A.T. FIELD — ACTIVE</span>
+      <a href="/">~/</a>
+      <a href="/projects">~/projects</a>
+      <a href="/blog">~/blog</a>
+      <a href="/uses">~/uses</a>
+      <a href="/about">~/about</a>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="hazard-footer">
+      <div class="magi">MELCHIOR 承認 · BALTHASAR 承認 · CASPER 承認</div>
+      <p>© 2026 NGUYỄN NHƯ VŨ · あんたバカ？</p>
+    </footer>
+  </body>
+</html>

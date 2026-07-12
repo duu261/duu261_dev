@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+_mockups/
+.thumbnail
