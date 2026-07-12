@@ -35,9 +35,15 @@ const { title } = Astro.props;
       <slot />
     </main>
 
-    <footer class="hazard-footer">
-      <div class="magi">MELCHIOR 承認 · BALTHASAR 承認 · CASPER 承認</div>
-      <p>© 2026 NGUYỄN NHƯ VŨ · あんたバカ？</p>
+    <div class="footer-stripe"></div>
+    <footer class="site-footer">
+      <span>© 2026 NGUYỄN NHƯ VŨ</span>
+      <span class="magi">
+        <span class="magi-label">MAGI</span>
+        <span class="magi-badge">MELCHIOR 承認</span>
+        <span class="magi-badge">BALTHASAR 承認</span>
+        <span class="magi-badge">CASPER 承認</span>
+      </span>
     </footer>
   </body>
 </html>
