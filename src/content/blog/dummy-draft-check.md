@@ -1,8 +1,8 @@
 ---
-title: Building a Quickshell status bar for people who know Java
+title: Ansible-managing two Arch machines from one playbook
 date: 2026-07-11
 tag: linux
-hook: Draft note on QML structure, signals, and where desktop widgets feel unlike backend code.
+hook: Draft note on roles, idempotence, and what broke the first time a fresh install ran the playbook.
 draft: true
 ---
 

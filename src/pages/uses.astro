@@ -15,7 +15,7 @@ const groups = [
     items: [
       ['Arch Linux', 'btw'],
       ['Hyprland', 'compositor'],
-      ['Quickshell - own shell', 'see projects/02'],
+      ['Dotfiles - Ansible-managed', 'see projects/02', '/projects/dotfiles'],
     ],
   },
   {
@@ -30,7 +30,7 @@ const groups = [
     label: 'AI STACK 支援機',
     items: [
       ['Claude Code', 'daily'],
-      ['Multi-agent orchestrator', 'see blog/01'],
+      ['Multi-agent orchestrator', 'see ~/blog', '/blog'],
       ['Global CLAUDE.md, synced', 'two machines'],
     ],
   },
@@ -58,6 +58,10 @@ const swatches = [
         </div>
         <h1 class="uses-title">Uses</h1>
         <p class="uses-tagline">The full loadout - updated when it changes, themed Macchiato since day one.</p>
+        <div class="page-prompt" style="--cmd-w: 13ch; --cmd-steps: 13;">
+          <span class="prompt">❯</span>
+          <span class="cmd">cat ~/uses.md</span>
+        </div>
       </div>
     </div>
 
@@ -66,10 +70,15 @@ const swatches = [
         <article class="uses-card">
           <span class="card-label">{group.label}</span>
           <div class="uses-list">
-            {group.items.map(([name, note]) => (
+            {group.items.map(([name, note, href]) => (
               <div class="uses-row">
                 <span class="item-name">{name}</span>
-                <span class="item-note">{note}</span>
+                <span class="leader" aria-hidden="true"></span>
+                {href ? (
+                  <a class="item-note" href={href}>{note}</a>
+                ) : (
+                  <span class="item-note">{note}</span>
+                )}
               </div>
             ))}
           </div>
@@ -169,6 +178,19 @@ const swatches = [
   color: var(--ctp-red);
 }
 
+/* conf-file section syntax: cat ~/uses.md shows [sections] */
+.card-label::before {
+  content: '[';
+  color: var(--ctp-muted);
+  letter-spacing: 0;
+}
+
+.card-label::after {
+  content: ']';
+  color: var(--ctp-muted);
+  margin-left: -3px;
+}
+
 .uses-list {
   display: flex;
   flex-direction: column;
@@ -177,8 +199,8 @@ const swatches = [
 
 .uses-row {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
+  align-items: baseline;
+  gap: 12px;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -188,11 +210,29 @@ const swatches = [
   font-weight: 600;
 }
 
+/* TOC-style dotted leader ties name to note across the card */
+.leader {
+  flex: 1;
+  min-width: 24px;
+  border-bottom: 1px dotted var(--ctp-muted);
+  transform: translateY(-4px);
+}
+
 .item-note {
   flex-shrink: 0;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
+}
+
+a.item-note {
+  color: var(--ctp-peach);
+  transition: color 0.2s;
+}
+
+a.item-note:hover {
+  color: var(--ctp-red);
+  text-decoration: underline;
 }
 
 .theme-card {
