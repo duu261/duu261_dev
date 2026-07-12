@@ -5,10 +5,11 @@ const cmd = `cd ${Astro.url.pathname}`;
 ---
 
 <Layout title="404">
-  <section class="notfound hud-grid-bg">
+  <section class="notfound">
+    <div class="nf-grid hud-grid-bg" aria-hidden="true"></div>
     <div class="hero-scanline"></div>
     <div class="nf-glow"></div>
-    <div class="nf-jp">信号喪失</div>
+    <div class="nf-jp" aria-hidden="true">信号喪失</div>
     <div class="page-prompt" style={`--cmd-w: ${cmd.length}ch; --cmd-steps: ${cmd.length};`}>
       <span class="prompt">❯</span>
       <span class="cmd">{cmd}</span>
@@ -28,6 +29,13 @@ const cmd = `cd ${Astro.url.pathname}`;
     position: relative; overflow: hidden;
     display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
     gap: 20px; padding: 72px;
+  }
+  /* grid stays header-zone only per design system; fade out before content midline */
+  .nf-grid {
+    position: absolute; inset: 0 0 auto; height: 42%;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(#000 55%, transparent);
+    mask-image: linear-gradient(#000 55%, transparent);
   }
   .nf-glow {
     position: absolute; top: 0; right: 0; bottom: 0; width: 55%;

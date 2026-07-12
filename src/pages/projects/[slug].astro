@@ -20,7 +20,7 @@ const number = String(project.data.order).padStart(2, '0');
 <Layout title={project.data.title}>
   <section class="case-section">
     <div class="case-hero hud-grid-bg">
-      <div class="case-number">{number}</div>
+      <div class="case-number" aria-hidden="true">{number}</div>
       <div class="hero-content">
         <div class="case-prompt">
           <span class="prompt">❯</span>
