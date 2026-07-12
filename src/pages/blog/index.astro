@@ -20,6 +20,13 @@ const posts = (await getCollection('blog'))
 
 const formatMonth = (date: Date) =>
   `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+const byYear = [...new Set(posts.map((p) => p.data.date.getFullYear()))]
+  .sort((a, b) => b - a)
+  .map((year) => ({
+    year,
+    posts: posts.filter((p) => p.data.date.getFullYear() === year),
+  }));
 ---
 
 <Layout title="Writing">
@@ -33,6 +40,11 @@ const formatMonth = (date: Date) =>
         </div>
         <h1 class="blog-title">Writing</h1>
         <p class="blog-tagline">One post a month. Real configs, real numbers, one diagram minimum.</p>
+        <div class="page-prompt" style="--cmd-w: 9ch; --cmd-steps: 9;">
+          <span class="prompt">❯</span>
+          <span class="cmd">ls ~/blog</span>
+          <span class="result"># {posts.length} posts</span>
+        </div>
         <div class="tag-rail" aria-label="Blog tags">
           <span class="tag-label">TAGS</span>
           {tags.map((tag) => (
@@ -48,42 +60,47 @@ const formatMonth = (date: Date) =>
     </div>
 
     <div class="archive-wrap">
-      <div class="year-row">
-        <span>2026</span>
-        <span class="year-rule"></span>
-      </div>
-
       {posts.length > 0 ? (
-        <div class="post-list">
-          {posts.map((post) => (
+        byYear.map(({ year, posts: yearPosts }) => (
+        <div class="year-group">
+          <div class="year-row">
+            <span>{year}</span>
+            <span class="year-rule"></span>
+          </div>
+          <div class="post-list">
+          {yearPosts.map((post) => (
             <article class:list={['post-row', { draft: post.data.draft }]}>
               <time datetime={post.data.date.toISOString()}>{post.data.draft ? 'draft' : formatMonth(post.data.date)}</time>
               <div class="post-main">
-                {post.data.draft ? (
-                  <span class="draft-title">{post.data.title}</span>
-                ) : (
-                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                )}
+                <div class="post-head">
+                  {post.data.draft ? (
+                    <span class="draft-title">{post.data.title}</span>
+                  ) : (
+                    <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                  )}
+                  <span
+                    class="post-tag"
+                    style={{
+                      '--tag-color': tagStyles[post.data.tag].color,
+                      '--tag-border': tagStyles[post.data.tag].border,
+                    }}
+                  >
+                    {post.data.tag}
+                  </span>
+                </div>
                 <p>{post.data.hook}</p>
               </div>
-              <span
-                class="post-tag"
-                style={{
-                  '--tag-color': tagStyles[post.data.tag].color,
-                  '--tag-border': tagStyles[post.data.tag].border,
-                }}
-              >
-                {post.data.tag}
-              </span>
             </article>
           ))}
+          </div>
         </div>
+        ))
       ) : (
         <div class="empty-log">
           <div class="empty-prompt">
             <span class="prompt">❯</span>
             <span class="cmd">ls ~/blog</span>
-            <span class="result">- 0 entries</span>
+            <span class="result"># 0 entries</span>
           </div>
           <p>No published posts yet. Markdown collection ready at <code>src/content/blog</code>.</p>
         </div>
@@ -163,6 +180,7 @@ const formatMonth = (date: Date) =>
 .archive-wrap {
   display: flex;
   flex-direction: column;
+  gap: 40px;
   padding: 0 72px 64px;
 }
 
@@ -194,17 +212,23 @@ const formatMonth = (date: Date) =>
 
 .post-row {
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr) auto;
+  grid-template-columns: 110px minmax(0, 1fr);
   gap: 24px;
   align-items: baseline;
   padding: 18px 0;
   border-top: 1px solid var(--ctp-border);
 }
 
+.post-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
 .post-row time {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .post-main {
@@ -232,9 +256,10 @@ const formatMonth = (date: Date) =>
 
 .post-main p {
   margin: 0;
-  font-size: 13px;
+  max-width: 70ch;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .post-tag {
@@ -278,7 +303,7 @@ const formatMonth = (date: Date) =>
 }
 
 .empty-prompt .result {
-  color: var(--ctp-muted);
+  color: var(--ctp-subtext);
 }
 
 .empty-log p {

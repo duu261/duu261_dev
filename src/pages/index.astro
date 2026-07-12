@@ -4,21 +4,29 @@ import Layout from '../layouts/Layout.astro';
 
 const ticker = ['SPRING BOOT', 'ARCH LINUX', 'NEOVIM + TMUX', 'ZMK / NRF52840', '日本語 studying'];
 
-const work = (await getCollection('projects'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .map((p) => ({
-    num: String(p.data.order).padStart(2, '0'),
-    title: p.data.title,
-    desc: p.data.summary,
-    stack: p.data.stack.join(' · '),
-    href: p.data.repo ?? `/projects/${p.id}`,
-  }));
+const allProjects = (await getCollection('projects'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
 
-const posts = [
-  { title: 'How I run a multi-agent Claude Code setup (orchestrator → workers)', date: '2026.07' },
-  { title: 'My global CLAUDE.md strategy: syncing config across two Arch machines', date: '2026.06' },
-  { title: 'Neovim + tmux + Claude Code vs. an IDE for Java', date: '2026.05' },
-];
+const work = allProjects.slice(0, 4).map((p) => ({
+  num: String(p.data.order).padStart(2, '0'),
+  title: p.data.title,
+  desc: p.data.summary,
+  stack: p.data.stack.join(' · '),
+  href: `/projects/${p.id}`,
+}));
+const moreWork = allProjects.length - work.length;
+
+const allPosts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const posts = allPosts.slice(0, 3).map((p) => ({
+  id: p.id,
+  title: p.data.title,
+  date: p.data.date.toISOString().slice(0, 7).replace('-', '.'),
+}));
+const morePosts = allPosts.length - posts.length;
 ---
 
 <Layout title="Home">
@@ -139,6 +147,11 @@ const posts = [
         <span class="jp">作品</span>
         <span class="rule"></span>
       </div>
+      <div class="section-cmd">
+        <span class="prompt">❯</span>
+        <span class="cmd">ls ~/projects | head -4</span>
+        <span class="note"># {allProjects.length} total</span>
+      </div>
       <div class="work-grid">
         {work.map((p, i) => (
           <a class:list={['work-card', { featured: i === 0, unit02: p.num === '02' }]} href={p.href}>
@@ -149,6 +162,11 @@ const posts = [
           </a>
         ))}
       </div>
+      <a class="section-more" href="/projects">
+        <span class="prompt">❯</span>
+        <span>cd ~/projects</span>
+        {moreWork > 0 && <span class="more">- {moreWork} more</span>}
+      </a>
     </div>
 
     <div>
@@ -157,14 +175,24 @@ const posts = [
         <span class="jp">記録</span>
         <span class="rule"></span>
       </div>
+      <div class="section-cmd">
+        <span class="prompt">❯</span>
+        <span class="cmd">ls -t ~/blog | head -3</span>
+        <span class="note"># {allPosts.length} total</span>
+      </div>
       <div class="writing-list">
         {posts.map((post) => (
           <div class="writing-row">
-            <a href="/blog">{post.title}</a>
+            <a href={`/blog/${post.id}`}>{post.title}</a>
             <span class="date">{post.date}</span>
           </div>
         ))}
       </div>
+      <a class="section-more" href="/blog">
+        <span class="prompt">❯</span>
+        <span>cd ~/blog</span>
+        {morePosts > 0 && <span class="more">- {morePosts} more</span>}
+      </a>
     </div>
   </section>
 </Layout>

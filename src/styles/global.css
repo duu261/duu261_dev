@@ -188,6 +188,33 @@ main > * { flex-shrink: 0; }
   animation: typing 1.8s steps(7) 0.4s both;
 }
 
+/* typed page-header prompt; pages set --cmd-w (command width in ch) and
+   --cmd-steps (character count) inline */
+.page-prompt {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 14px;
+}
+.page-prompt .prompt { color: var(--accent-primary); }
+.page-prompt .cmd {
+  overflow: hidden; white-space: nowrap; width: var(--cmd-w);
+  color: var(--ctp-green);
+  animation: typingcmd 1.8s steps(var(--cmd-steps)) 0.4s both;
+}
+.page-prompt .result {
+  /* order pushes the count behind the ::after cursor, so the cursor
+     hugs the typed command, not the late-fading count */
+  order: 1;
+  color: var(--ctp-subtext);
+  animation: promptresult 0.3s 2.3s both;
+}
+
+.page-prompt::after {
+  content: '▍';
+  margin-left: -4px;
+  color: var(--ctp-peach);
+  animation: cursorblink 1.1s steps(1) infinite;
+}
+
 .hero-name {
   margin: 0;
   font-family: var(--font-name);
@@ -355,6 +382,21 @@ main > * { flex-shrink: 0; }
 .section-head .en { font-family: var(--font-heading-jp); font-weight: 800; font-size: 30px; color: var(--ctp-text); }
 .section-head .jp { font-family: var(--font-mono); font-size: 11px; color: var(--accent-primary); letter-spacing: 3px; }
 .section-head .rule { flex: 1; height: 6px; background: repeating-linear-gradient(-45deg, rgba(237,135,150,0.35) 0 8px, transparent 7px 16px); }
+.section-cmd {
+  display: flex; align-items: center; gap: 10px; margin: -12px 0 20px;
+  font-family: var(--font-mono); font-size: 13px;
+}
+.section-cmd .prompt { color: var(--accent-primary); }
+.section-cmd .cmd { color: var(--ctp-green); }
+.section-cmd .note { color: var(--ctp-subtext); }
+.section-more {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 20px;
+  font-family: var(--font-mono); font-size: 13px; color: var(--ctp-subtext);
+  white-space: nowrap; transition: color 0.2s;
+}
+.section-more:hover { color: var(--accent-secondary); }
+.section-more .prompt { color: var(--accent-primary); }
+.section-more .more { color: var(--ctp-subtext); }
 
 .work-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; }
 .work-card.featured { grid-row: span 2; padding: 32px; }
@@ -384,7 +426,7 @@ main > * { flex-shrink: 0; }
 .work-card.unit02:hover { box-shadow: 0 0 18px rgba(245, 169, 127, 0.18); }
 .work-card .title { font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--ctp-text); }
 .work-card p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ctp-subtext); flex: 1; }
-.work-card .stack { font-family: var(--font-mono); font-size: 11px; color: var(--ctp-muted); }
+.work-card .stack { font-family: var(--font-mono); font-size: 11px; color: var(--ctp-subtext); }
 
 .writing-list { display: flex; flex-direction: column; }
 .writing-row {
@@ -392,7 +434,7 @@ main > * { flex-shrink: 0; }
   border-top: 1px solid var(--ctp-border);
 }
 .writing-row a:hover { color: var(--accent-primary); text-decoration: underline; }
-.writing-row .date { font-family: var(--font-mono); font-size: 12px; color: var(--ctp-muted); }
+.writing-row .date { font-family: var(--font-mono); font-size: 12px; color: var(--ctp-subtext); }
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes atblink { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
@@ -416,6 +458,8 @@ main > * { flex-shrink: 0; }
     95% { text-shadow: 2px 0 #f5a97f, -2px 0 #8aadf4; transform: none; }
   }
   @keyframes typing { from { width: 0; } to { width: 6.5ch; } }
+  @keyframes typingcmd { from { width: 0; } to { width: var(--cmd-w); } }
+  @keyframes promptresult { from { opacity: 0; } to { opacity: 1; } }
 }
 
 /* responsive */
@@ -446,6 +490,7 @@ main > * { flex-shrink: 0; }
   .alert-bar .blink,
   .footer-stripe-track,
   .hero-glow, .hero-scanline, .hero-tag .stripe-track, .hero-whoami .cmd, .hero-name,
+  .page-prompt .cmd, .page-prompt .result, .page-prompt::after,
   .hero-name .cursor, .sync-gauge .bar.pulse, .hud-02, .hud-glow, .hud-octagon,
   .hud-ring.outer, .hud-ring.mid, .hud-core, .fastfetch-status .dot, .ticker,
   .hud-stripe-bottom-track {
