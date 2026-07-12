@@ -14,12 +14,17 @@ body {
 a { color: inherit; text-decoration: none; }
 
 .alert-bar {
+  background: var(--ctp-mantle);
+  border-bottom: 1px solid var(--ctp-border);
+}
+
+.alert-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   padding: 10px 72px;
-  background: var(--ctp-mantle);
-  border-bottom: 1px solid var(--ctp-border);
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 3px;
@@ -34,17 +39,19 @@ a { color: inherit; text-decoration: none; }
 
 .footer-stripe {
   margin-top: 4rem;
-  height: 10px;
+  height: 14px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--ctp-red) 0 12px,
-    var(--ctp-peach) 12px 24px,
-    var(--ctp-crust) 24px 36px
+    var(--ctp-red) 0 14px,
+    var(--ctp-peach) 14px 18px,
+    var(--ctp-crust) 18px 32px
   );
   animation: stripemove 4s linear infinite;
 }
 
 .site-footer {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,6 +78,9 @@ a { color: inherit; text-decoration: none; }
   padding: 2px 8px;
   clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
 }
+
+.footer-tagline .peach { color: var(--ctp-peach); }
+.footer-tagline .red { color: var(--accent-primary); }
 
 /* hero */
 .hero {

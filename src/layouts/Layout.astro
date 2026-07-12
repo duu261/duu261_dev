@@ -23,12 +23,14 @@ const { title } = Astro.props;
   </head>
   <body>
     <nav class="alert-bar">
-      <span class="blink">A.T. FIELD — ACTIVE</span>
-      <a href="/">~/</a>
-      <a href="/projects">~/projects</a>
-      <a href="/blog">~/blog</a>
-      <a href="/uses">~/uses</a>
-      <a href="/about">~/about</a>
+      <div class="alert-bar-inner">
+        <span class="blink">A.T. FIELD — ACTIVE</span>
+        <a href="/">~/</a>
+        <a href="/projects">~/projects</a>
+        <a href="/blog">~/blog</a>
+        <a href="/uses">~/uses</a>
+        <a href="/about">~/about</a>
+      </div>
     </nav>
 
     <main>
@@ -43,6 +45,9 @@ const { title } = Astro.props;
         <span class="magi-badge">MELCHIOR 承認</span>
         <span class="magi-badge">BALTHASAR 承認</span>
         <span class="magi-badge">CASPER 承認</span>
+      </span>
+      <span class="footer-tagline">
+        <span class="peach">あんたバカ？</span> — ship it anyway. <span class="red">UNIT-02</span>
       </span>
     </footer>
   </body>
