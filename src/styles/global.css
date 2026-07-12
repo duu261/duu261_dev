@@ -42,13 +42,18 @@ a { color: inherit; text-decoration: none; }
 
 .footer-stripe {
   height: 14px;
+  overflow: hidden;
+}
+.footer-stripe-track {
+  height: 100%;
+  width: 200%;
   background: repeating-linear-gradient(
     -45deg,
     var(--ctp-red) 0 14px,
     var(--ctp-peach) 14px 18px,
     var(--ctp-crust) 18px 32px
   );
-  animation: stripemove 4s linear infinite;
+  animation: stripeslide 4s linear infinite;
 }
 
 .site-footer {
@@ -121,9 +126,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-tag .stripe {
+  display: block;
   height: 12px; width: 120px;
+  overflow: hidden;
+}
+.hero-tag .stripe-track {
+  display: block;
+  height: 100%; width: 200%;
   background: repeating-linear-gradient(-45deg, var(--ctp-red) 0 10px, var(--ctp-peach) 10px 20px);
-  animation: stripemove 3s linear infinite;
+  animation: stripeslide 3s linear infinite;
 }
 
 .hero-whoami {
@@ -227,8 +238,12 @@ a { color: inherit; text-decoration: none; }
 .hud-readout.br { bottom: 10px; right: 36px; }
 .hud-stripe-bottom {
   position: absolute; bottom: -6px; left: -8px; right: -8px; height: 10px;
+  overflow: hidden; pointer-events: none;
+}
+.hud-stripe-bottom-track {
+  height: 100%; width: 200%;
   background: repeating-linear-gradient(-45deg, var(--ctp-red) 0 12px, var(--ctp-crust) 12px 24px);
-  animation: stripemove 4s linear infinite; pointer-events: none;
+  animation: stripeslide 4s linear infinite;
 }
 
 /* fastfetch */
@@ -263,7 +278,7 @@ a { color: inherit; text-decoration: none; }
 .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px; }
 .section-head .en { font-family: var(--font-heading-jp); font-weight: 800; font-size: 30px; color: var(--ctp-text); }
 .section-head .jp { font-family: var(--font-mono); font-size: 11px; color: var(--accent-primary); letter-spacing: 3px; }
-.section-head .rule { flex: 1; height: 6px; background: repeating-linear-gradient(-45deg, rgba(237,135,150,0.35) 0 8px, transparent 8px 16px); }
+.section-head .rule { flex: 1; height: 6px; background: repeating-linear-gradient(-45deg, rgba(237,135,150,0.35) 0 8px, transparent 7px 16px); }
 
 .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .work-card {
@@ -287,7 +302,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes atblink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-  @keyframes stripemove { to { background-position: 64px 0; } }
+  @keyframes stripeslide { to { transform: translateX(-50%); } }
   @keyframes syncpulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
   @keyframes scanline { 0% { top: -15%; } 100% { top: 115%; } }
   @keyframes tickermove { to { transform: translateX(-50%); } }
@@ -307,11 +322,11 @@ a { color: inherit; text-decoration: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .alert-bar .blink,
-  .footer-stripe,
-  .hero-glow, .hero-scanline, .hero-tag .stripe, .hero-whoami .cmd, .hero-name,
+  .footer-stripe-track,
+  .hero-glow, .hero-scanline, .hero-tag .stripe-track, .hero-whoami .cmd, .hero-name,
   .hero-name .cursor, .sync-gauge .bar.pulse, .hud-02, .hud-glow, .hud-octagon,
   .hud-ring.outer, .hud-ring.mid, .hud-core, .fastfetch-status .dot, .ticker,
-  .hud-stripe-bottom {
+  .hud-stripe-bottom-track {
     animation: none;
   }
 }
