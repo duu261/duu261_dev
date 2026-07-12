@@ -2,29 +2,32 @@
 
 body {
   margin: 0;
-  background: var(--ctp-crust);
+  background: var(--ctp-mantle);
   color: var(--ctp-text);
   font-family: var(--font-body);
+}
+
+a { color: inherit; text-decoration: none; }
+
+.page-frame {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-left: 1px solid var(--ctp-border);
+  border-right: 1px solid var(--ctp-border);
+  background: var(--ctp-crust);
   background-image:
     linear-gradient(rgba(202, 211, 245, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(202, 211, 245, 0.04) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
-a { color: inherit; text-decoration: none; }
-
 .alert-bar {
-  background: var(--ctp-mantle);
-  border-bottom: 1px solid var(--ctp-border);
-}
-
-.alert-bar-inner {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   padding: 10px 72px;
+  background: var(--ctp-mantle);
+  border-bottom: 1px solid var(--ctp-border);
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 3px;
@@ -38,7 +41,6 @@ a { color: inherit; text-decoration: none; }
 .alert-bar a:hover { color: var(--accent-primary); }
 
 .footer-stripe {
-  margin-top: 4rem;
   height: 14px;
   background: repeating-linear-gradient(
     -45deg,
@@ -50,8 +52,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 .site-footer {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -85,8 +85,6 @@ a { color: inherit; text-decoration: none; }
 /* hero */
 .hero {
   position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 72px 72px 64px;
   overflow: hidden;
 }
@@ -251,7 +249,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ticker */
 .ticker-wrap { border-top: 1px solid var(--ctp-border); border-bottom: 1px solid var(--ctp-border); background: var(--ctp-mantle); padding: 10px 0; }
-.ticker-inner { max-width: 1200px; margin: 0 auto; overflow: hidden; }
+.ticker-inner { padding: 0 72px; overflow: hidden; }
 .ticker {
   display: flex; white-space: nowrap; width: max-content; animation: tickermove 22s linear infinite;
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 3px; color: var(--ctp-muted);
@@ -261,7 +259,7 @@ a { color: inherit; text-decoration: none; }
 .ticker .dot { color: var(--ctp-peach); }
 
 /* work + writing */
-.section-block { max-width: 1200px; margin: 0 auto; padding: 56px 72px 72px; display: flex; flex-direction: column; gap: 40px; }
+.section-block { padding: 56px 72px 72px; display: flex; flex-direction: column; gap: 40px; }
 .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px; }
 .section-head .en { font-family: var(--font-heading-jp); font-weight: 800; font-size: 30px; color: var(--ctp-text); }
 .section-head .jp { font-family: var(--font-mono); font-size: 11px; color: var(--accent-primary); letter-spacing: 3px; }
