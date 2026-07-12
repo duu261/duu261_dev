@@ -9,7 +9,7 @@ const projects = projectsData.sort((a, b) =>
 ---
 
 <Layout title="Projects">
-  <section class="projects-section">
+  <section class="projects-section hud-grid-bg">
     <div class="projects-header">
       <div class="header-stripe"><div class="stripe-track"></div></div>
       <span class="header-tag">DUU261.INDEVS.IN - PROJECTS</span>
@@ -35,9 +35,10 @@ const projects = projectsData.sort((a, b) =>
         const description = (project.body ?? '').trim().split('\n\n')[0];
 
         return (
-          <article class="project-card">
+          <article class:list={['project-card', { unit02: project.data.order === 2 }]}>
             <div class="card-number">
               <span class="number">{number}</span>
+              {project.data.order === 2 && <span class="jp-tag">弐号機</span>}
               <span class="role">{roleDisplay}</span>
             </div>
             <div class="card-content">
@@ -176,6 +177,16 @@ const projects = projectsData.sort((a, b) =>
 .project-card:hover {
   background: var(--ctp-base);
   transform: translateY(-3px);
+}
+
+.project-card.unit02 { border-left-color: var(--ctp-peach); }
+.project-card.unit02 .number { color: var(--ctp-peach); }
+.project-card.unit02:hover { box-shadow: 0 0 18px rgba(245, 169, 127, 0.18); }
+.jp-tag {
+  align-self: flex-start;
+  padding: 1px 6px;
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--ctp-peach); border: 1px solid rgba(245, 169, 127, 0.4);
 }
 
 .card-number {
