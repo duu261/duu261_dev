@@ -1,10 +1,183 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const ticker = ['SPRING BOOT', 'ARCH LINUX', 'NEOVIM + TMUX', 'ZMK / NRF52840', '日本語 studying'];
+
+const work = [
+  {
+    num: '01',
+    title: 'ParkMaster — Parking Building Management System',
+    desc: 'Spring Boot + PostgreSQL + React/Vite. FPT SWP391 capstone: JWT auth, AI slot allocation, VNPay payments.',
+    stack: 'spring-boot · postgresql · react',
+    href: 'https://github.com/duu261/Parking-Building-Management-System',
+  },
+  {
+    num: '02',
+    title: 'Dotfiles',
+    desc: 'Arch + Hyprland + Neovim + tmux config, Ansible-managed.',
+    stack: 'arch · hyprland · ansible',
+    href: 'https://github.com/duu261/dotfiles',
+  },
+  {
+    num: '03',
+    title: 'ZMK Cornix + Snake Dongle',
+    desc: 'Converted a stock split keyboard to ZMK; built a wireless nRF52840 dongle receiver from scratch.',
+    stack: 'zmk · nrf52840 · c',
+    href: 'https://github.com/duu261/zmk-keyboard-cornix',
+  },
+];
+
+const posts = [
+  { title: 'How I run a multi-agent Claude Code setup (orchestrator → workers)', date: '2026.07' },
+  { title: 'My global CLAUDE.md strategy: syncing config across two Arch machines', date: '2026.06' },
+  { title: 'Neovim + tmux + Claude Code vs. an IDE for Java', date: '2026.05' },
+];
 ---
 
 <Layout title="Home">
-  <p style="font-family: var(--font-mono); padding: 2rem;">
-    ❯ whoami<br />
-    scaffold stub — Hero, fastfetch block, ticker, work, writing sections next (mockup 6a).
-  </p>
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-scanline"></div>
+
+    <div class="hero-grid">
+      <div class="hero-identity">
+        <div class="hero-tag">
+          <span class="stripe"></span>
+          <span>DUU261.INDEVS.IN — UNIT-02 · PILOT</span>
+        </div>
+
+        <div class="hero-whoami">
+          <span class="prompt">❯</span>
+          <span class="cmd">whoami</span>
+        </div>
+
+        <h1 class="hero-name">Nguyễn<br />Như Vũ<span class="cursor">_</span></h1>
+
+        <p class="hero-tagline">Java backend · BrSE student · Ho Chi Minh City.</p>
+
+        <div class="sync-gauge">
+          <span class="label">SYNC RATE</span>
+          <div class="bars">
+            <span class="bar filled"></span>
+            <span class="bar filled"></span>
+            <span class="bar filled"></span>
+            <span class="bar filled"></span>
+            <span class="bar filled peach"></span>
+            <span class="bar filled peach pulse"></span>
+            <span class="bar filled peach pulse"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+          <span class="pct">72.8%</span>
+          <span class="note">— JLPT progress</span>
+        </div>
+
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="https://github.com/duu261">GITHUB /DUU261</a>
+          <a class="btn btn-outline" href="https://youtube.com/@duu26102">YOUTUBE /DUU26102</a>
+        </div>
+      </div>
+
+      <div class="hud-wrap">
+        <div class="hud-jp-tall">弐号機</div>
+        <div class="hud-02">02</div>
+        <div class="hud-ring-area">
+          <div class="hud-glow"></div>
+          <div class="hud-crosshair-h"></div>
+          <div class="hud-crosshair-v"></div>
+          <div class="hud-corner tl"></div>
+          <div class="hud-corner tr"></div>
+          <div class="hud-corner bl"></div>
+          <div class="hud-corner br"></div>
+          <div class="hud-octagon red"></div>
+          <div class="hud-octagon peach"></div>
+          <div class="hud-ring outer"></div>
+          <div class="hud-ring mid"></div>
+          <div class="hud-ring inner"></div>
+          <div class="hud-core"></div>
+          <div class="hud-readout tl"><span style={{ color: 'var(--ctp-red)' }}>PATTERN</span>: ORANGE</div>
+          <div class="hud-readout tr">A.T. FIELD <span style={{ color: 'var(--ctp-green)' }}>ACTIVE</span></div>
+          <div class="hud-readout bl">PILOT: <span style={{ color: 'var(--ctp-peach)' }}>DUU261</span></div>
+          <div class="hud-readout br">STATUS: <span style={{ color: 'var(--ctp-peach)' }}>LEARNING</span></div>
+        </div>
+        <div class="hud-stripe-bottom"></div>
+      </div>
+    </div>
+
+    <div class="fastfetch">
+      <pre>{`      /\\
+     /  \\
+    /\\   \\
+   /      \\
+  /   ,,   \\
+ /   |  |  -\\
+/_-''    ''-_\\`}</pre>
+      <div class="fastfetch-grid">
+        <div><span class="key">Role</span><span class="sep">: </span><span class="val">Java backend · BrSE</span></div>
+        <div><span class="key">OS</span><span class="sep">: </span><span class="val">Arch Linux + Hyprland</span></div>
+        <div><span class="key">Editor</span><span class="sep">: </span><span class="val">Neovim + tmux</span></div>
+        <div><span class="key">Stack</span><span class="sep">: </span><span class="val">Java · Spring Boot · Lua · Bash</span></div>
+        <div><span class="key">Lang</span><span class="sep">: </span><span class="val">EN · VI · JA (studying)</span></div>
+        <div><span class="key">Uni</span><span class="sep">: </span><span class="val">FPT University</span></div>
+        <div class="fastfetch-swatches">
+          <span class="swatch" style={{ background: 'var(--ctp-red)' }}></span>
+          <span class="swatch" style={{ background: 'var(--ctp-peach)' }}></span>
+          <span class="swatch" style={{ background: 'var(--ctp-yellow)' }}></span>
+          <span class="swatch" style={{ background: 'var(--ctp-green)' }}></span>
+          <span class="swatch" style={{ background: 'var(--ctp-blue)' }}></span>
+          <span class="swatch" style={{ background: 'var(--ctp-mauve)' }}></span>
+          <span class="fastfetch-status"><span class="dot">●</span> learning, building, shipping</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker-wrap">
+    <div class="ticker">
+      {[...ticker, ...ticker].map((item, i) => (
+        <>
+          <span class="warn">警告 WARNING</span>
+          <span>{item}</span>
+          <span class="dot">◆</span>
+        </>
+      ))}
+    </div>
+  </div>
+
+  <section class="section-block">
+    <div>
+      <div class="section-head">
+        <span class="en">Selected Work</span>
+        <span class="jp">作品</span>
+        <span class="rule"></span>
+      </div>
+      <div class="work-grid">
+        {work.map((p) => (
+          <a class="work-card" href={p.href}>
+            <span class="num">{p.num}</span>
+            <span class="title">{p.title}</span>
+            <p>{p.desc}</p>
+            <span class="stack">{p.stack}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <div class="section-head">
+        <span class="en">Writing</span>
+        <span class="jp">記録</span>
+        <span class="rule"></span>
+      </div>
+      <div class="writing-list">
+        {posts.map((post) => (
+          <div class="writing-row">
+            <a href="/blog">{post.title}</a>
+            <span class="date">{post.date}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>
