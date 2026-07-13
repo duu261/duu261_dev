@@ -13,7 +13,7 @@ Static site, zero client JS. All motion is CSS, gated behind `prefers-reduced-mo
 
 ## Commands
 
-pnpm only.
+Requires Node 22.12+ and pnpm. pnpm only, never npm.
 
 | Command            | Action                            |
 | :----------------- | :-------------------------------- |

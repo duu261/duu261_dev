@@ -2,6 +2,32 @@
 
 Plain markdown. The build handles the styling - you do NOT hand-write HTML or colors.
 
+## Workflow
+
+1. Create the file: `src/content/blog/my-post.md` or `src/content/projects/my-project.md`.
+   The filename stem is the URL slug: `parkmaster.md` -> `/projects/parkmaster`.
+2. Add frontmatter (schemas below). Missing or invalid fields fail the build.
+3. Preview: `pnpm dev`, then open `localhost:4321/blog/my-post`. `draft: true`
+   removes the entry from all routes, lists, and counts - including the dev
+   server - so keep `draft: false` while previewing and only flip it to `true`
+   if you commit unfinished work.
+4. Before committing, `pnpm build` must pass.
+
+## Blog frontmatter
+
+```yaml
+---
+title: What I learned shipping ParkMaster
+date: 2026-07-14            # YYYY-MM-DD
+tag: java                   # java | tools | linux | brse | hardware
+hook: One or two sentences shown on the /blog index.
+context: FPT SWP391         # optional, shown in the post meta line
+draft: false                # true = excluded from the site entirely
+---
+```
+
+Read time is computed at build (200 wpm on the body) - never write it by hand.
+
 ## Project frontmatter
 
 ```yaml
@@ -14,6 +40,7 @@ repo: https://github.com/...   # optional -> REPO button
 demo: https://...              # optional -> LIVE DEMO button
 order: 1                   # position on /projects
 summary: One-liner for cards.
+draft: false               # true = excluded from the site entirely
 ---
 ```
 
@@ -34,9 +61,11 @@ summary: One-liner for cards.
 
 ## Diagrams
 
-1. **ASCII (default)**: fenced ```txt block. Any block containing `──▶` is
-  auto-colored: source before arrow peach, target after red, `(...)` muted,
-  last non-empty line blue. Other fences get normal Catppuccin code highlighting.
+1. **ASCII (default)**: fenced ```txt block. Any fence containing `──▶`
+  (whatever its language) is auto-colored: source before arrow peach, target
+  after red, `(...)` muted, last non-empty line blue. Keep `──▶` out of real
+  code samples or they turn into diagrams. Fences without the arrow get normal
+  Catppuccin code highlighting.
 2. **Excalidraw/hand SVG**: draw with palette colors, save to `public/diagrams/`,
    embed `![alt](/diagrams/name.svg)`.
 3. **Mermaid**: write `foo.mmd`, run `scripts/mermaid.sh foo.mmd`, commit the
@@ -86,4 +115,6 @@ blog-diagram:
 | images | full-width, thin border |
 | `> quote` | red-edged callout; bold **first** word set styles the 警告 label |
 
-Stress page with every construct once: `/blog/dummy-template-check`.
+Stress page with every construct once: `src/content/blog/dummy-template-check.md`.
+It ships with `draft: true`, so set `draft: false` locally and run `pnpm dev` to
+view it at `/blog/dummy-template-check` - revert before committing.
