@@ -3,7 +3,6 @@ title: Neovim + tmux vs. an IDE for Java
 date: 2026-06-18
 tag: java
 hook: Contrarian, specific, and measured with real project builds instead of editor folklore.
-readTime: 7 min
 context: lsp setup
 draft: true
 ---

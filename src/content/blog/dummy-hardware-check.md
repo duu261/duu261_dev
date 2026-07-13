@@ -3,7 +3,6 @@ title: Building a ZMK split keyboard keymap that survives real coursework
 date: 2026-03-14
 tag: hardware
 hook: Layer design, combos, and the boring constraints that matter more than switch choice.
-readTime: 6 min
 context: zmk keymap
 draft: true
 ---

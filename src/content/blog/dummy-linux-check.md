@@ -3,7 +3,6 @@ title: My global config strategy across two Arch machines
 date: 2026-05-23
 tag: linux
 hook: One repo, two machines, zero drift - the config that follows me around.
-readTime: 4 min
 context: arch workflow
 draft: true
 ---

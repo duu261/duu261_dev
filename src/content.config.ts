@@ -8,7 +8,6 @@ const blog = defineCollection({
     date: z.date(),
     tag: z.enum(['java', 'tools', 'linux', 'brse', 'hardware']),
     hook: z.string(),
-    readTime: z.string().optional(),
     context: z.string().optional(),
     draft: z.boolean().default(false),
   }),

@@ -23,6 +23,8 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const date = post.data.date.toISOString().slice(0, 10).replaceAll('-', '.');
+// 200 wpm on the raw markdown body; close enough, never hand-written
+const readTime = `${Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 200))} min`;
 ---
 
 <Layout title={post.data.title}>
@@ -38,12 +40,8 @@ const date = post.data.date.toISOString().slice(0, 10).replaceAll('-', '.');
           <time datetime={post.data.date.toISOString()}>{date}</time>
           <span>·</span>
           <span style={{ color: tagColors[post.data.tag] }}>{post.data.tag}</span>
-          {post.data.readTime && (
-            <>
-              <span>·</span>
-              <span>{post.data.readTime}</span>
-            </>
-          )}
+          <span>·</span>
+          <span>{readTime}</span>
           {post.data.context && (
             <>
               <span>·</span>

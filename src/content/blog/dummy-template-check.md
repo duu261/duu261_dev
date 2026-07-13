@@ -3,7 +3,6 @@ title: Template stress check for blog rendering
 date: 2026-07-14
 tag: tools
 hook: A dense dummy post that exercises every markdown construct the blog theme supports - prose, headings, lists, tables, code, diagrams, file panels, and callouts.
-readTime: 9 min
 context: render audit
 draft: true
 ---

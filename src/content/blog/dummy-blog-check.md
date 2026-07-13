@@ -3,7 +3,6 @@ title: How I keep two Arch machines in sync
 date: 2026-07-12
 tag: linux
 hook: One repo, two machines, and enough guardrails to stop local drift from becoming invisible.
-readTime: 5 min
 context: dotfiles
 draft: true
 ---

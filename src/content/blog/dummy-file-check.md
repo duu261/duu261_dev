@@ -3,7 +3,6 @@ title: Syncing a shared config file without hiding machine drift
 date: 2026-07-13
 tag: tools
 hook: A visual-check post for file blocks, terminal diagrams, and warning callouts in the blog template.
-readTime: 6 min
 context: config sync
 draft: true
 ---
