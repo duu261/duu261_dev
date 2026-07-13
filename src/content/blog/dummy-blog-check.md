@@ -5,7 +5,7 @@ tag: linux
 hook: One repo, two machines, and enough guardrails to stop local drift from becoming invisible.
 readTime: 5 min
 context: dotfiles
-draft: false
+draft: true
 ---
 
 ## The topology

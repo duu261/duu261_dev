@@ -5,7 +5,7 @@ tag: tools
 hook: A visual-check post for file blocks, terminal diagrams, and warning callouts in the blog template.
 readTime: 6 min
 context: config sync
-draft: false
+draft: true
 ---
 
 ## The file

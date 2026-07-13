@@ -5,7 +5,7 @@ tag: java
 hook: Contrarian, specific, and measured with real project builds instead of editor folklore.
 readTime: 7 min
 context: lsp setup
-draft: false
+draft: true
 ---
 
 ## What LSP actually gives

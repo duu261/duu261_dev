@@ -5,7 +5,7 @@ tag: linux
 hook: One repo, two machines, zero drift - the config that follows me around.
 readTime: 4 min
 context: arch workflow
-draft: false
+draft: true
 ---
 
 ## Sync shape

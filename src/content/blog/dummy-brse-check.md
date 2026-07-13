@@ -5,7 +5,7 @@ tag: brse
 hook: Notes on Japanese study, software fundamentals, and where classroom expectations diverge from project work.
 readTime: 8 min
 context: jp-vn pipeline
-draft: false
+draft: true
 ---
 
 ## The real split
