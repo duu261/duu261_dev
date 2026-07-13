@@ -9,17 +9,19 @@ Static site, zero client JS. All motion is CSS, gated behind `prefers-reduced-mo
 - [Astro](https://astro.build) with content collections (`src/content/projects`, `src/content/blog`)
 - Catppuccin Macchiato palette, Fira Code / Shippori Mincho B1 / Playfair Display / Archivo
 - Custom remark pipeline for themed diagrams, file panels, and callouts (see `AUTHORING.md`)
+- Sitemap + RSS (`/rss.xml`) generated at build time
 
 ## Commands
 
 pnpm only.
 
-| Command        | Action                            |
-| :------------- | :-------------------------------- |
-| `pnpm install` | Install dependencies              |
-| `pnpm dev`     | Dev server at `localhost:4321`    |
-| `pnpm build`   | Production build to `./dist/`     |
-| `pnpm preview` | Preview the production build      |
+| Command            | Action                            |
+| :----------------- | :-------------------------------- |
+| `pnpm install`     | Install dependencies              |
+| `pnpm dev`         | Dev server at `localhost:4321`    |
+| `pnpm build`       | Production build to `./dist/`     |
+| `pnpm astro check` | Type-check pages and config       |
+| `pnpm preview`     | Preview the production build      |
 
 ## Writing content
 
