@@ -1,7 +1,8 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
 import { defineHastPlugin, defineMdastPlugin } from 'satteri';
+
+import sitemap from '@astrojs/sitemap';
 
 /** Wrap the leading CJK label of h2 headings ("問題 Problem") in <span class="jp">
  *  so pages can style it as a separate kicker without HTML in the markdown. */
@@ -148,6 +149,8 @@ function filePanels() {
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://duu261.indevs.in',
+
   markdown: {
     processor: satteri({
       hastPlugins: [jpHeadingLabels()],
@@ -157,4 +160,6 @@ export default defineConfig({
       theme: 'catppuccin-macchiato',
     },
   },
+
+  integrations: [sitemap()],
 });

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://duu261.indevs.in/sitemap-index.xml
