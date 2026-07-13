@@ -5,21 +5,22 @@ const pilotFile = [
   ['callsign', 'duu261'],
   ['base', 'Ho Chi Minh City'],
   ['unit', 'FPT University - final year'],
-  ['track', 'Java backend / BrSE'],
+  ['track', 'Java backend · BrSE'],
   ['jp', 'JLPT N3 in progress'],
   ['machines', '2 × Arch Linux'],
+  ['available', 'immediately, part-time until graduation'],
 ];
 
 const statusCards = [
   {
     label: 'NOW 現在',
     accent: 'var(--ctp-red)',
-    text: 'Final year at FPT - shipping this site - studying Japanese daily',
+    text: 'Final year at FPT - building backend projects - studying Japanese daily',
   },
   {
     label: 'NEXT 次',
     accent: 'var(--ctp-peach)',
-    text: 'Backend / BrSE internship - JLPT N3 - api.duu261.indevs.in live',
+    text: 'Backend · BrSE internship - JLPT N3 - live Spring Boot demos at api.duu261.indevs.in',
   },
   {
     label: 'THEN 目標',
@@ -50,16 +51,16 @@ const statusCards = [
       <div class="about-main">
       <div class="about-copy">
         <p>
-          I'm <strong>Vũ</strong> - final-year software engineering student at FPT University, on the Java BrSE track in Ho Chi Minh City. I build backend systems in Spring Boot and everything around them: AI workflows, Linux desktop, and hardware on my desk.
+          I'm <strong>Vũ</strong> - final-year software engineering student at FPT University, on the Java BrSE track in Ho Chi Minh City. I build backend systems in Spring Boot - most recently <a href="/projects/parkmaster">ParkMaster</a>, a parking-building management capstone - and everything around them: AI workflows, Linux desktop, and hardware on my desk.
         </p>
         <p>
           <strong class="lead">Why Japanese?</strong> A BrSE sits between Japanese clients and Vietnamese engineers, and the bridge only works if both ends trust it. I'm building toward JLPT N3 and beyond, because requirements lost in translation become bugs shipped in production.
         </p>
         <p>
-          <strong class="lead">Why Linux and hardware?</strong> My desktop is itself a project: Arch + Hyprland, dotfiles managed with Ansible so a fresh machine is one playbook away. Same curiosity leaks downward: an ESP32 dongle here, an nRF52840 there.
+          <strong class="lead">Why Linux and hardware?</strong> My desktop is itself a project: two Arch machines, Hyprland, one Ansible playbook - a fresh install is a coffee break, not a lost weekend. I write Java in Neovim with jdtls, inside tmux, on purpose. The same curiosity reaches the desk: I converted my <a href="/projects/zmk-cornix">split keyboard</a> to ZMK and built its wireless nRF52840 dongle from scratch.
         </p>
         <p>
-          <strong class="lead">Where this is headed:</strong> short term: internship, N3, and Phase 2 of this site with live Spring Boot demos. Long term: engineer JP teams hand ambiguous, hard problems to.
+          <strong class="lead">Proof over promises:</strong> the <a href="/projects">case studies</a> walk through what I've built - problem, architecture, tradeoffs, and what I'd change. Where this is headed is on the cards below.
         </p>
       </div>
 
@@ -226,6 +227,17 @@ const statusCards = [
 
 .pilot-row .open {
   color: var(--ctp-green);
+}
+
+.about-copy a {
+  color: var(--ctp-peach);
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 169, 127, 0.4);
+  text-underline-offset: 3px;
+}
+
+.about-copy a:hover {
+  text-decoration-color: var(--ctp-peach);
 }
 
 .about-copy strong {

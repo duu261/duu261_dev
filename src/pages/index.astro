@@ -65,7 +65,7 @@ const morePosts = allPosts.length - posts.length;
             <span class="bar"></span>
           </div>
           <span class="pct">72.8%</span>
-          <span class="note">- JLPT progress</span>
+          <span class="note">- JLPT N3 progress</span>
         </div>
 
         <div class="hero-buttons">
@@ -108,10 +108,12 @@ const morePosts = allPosts.length - posts.length;
         <div class="fastfetch-host"><span class="key">duu</span><span class="sep">@</span><span class="key">unit02</span></div>
         <div class="fastfetch-rule" aria-hidden="true">-----------</div>
         <div><span class="key">Role</span><span class="sep">: </span><span class="val">Java backend · BrSE</span></div>
-        <div><span class="key">OS</span><span class="sep">: </span><span class="val">Arch Linux + Hyprland</span></div>
-        <div><span class="key">Editor</span><span class="sep">: </span><span class="val">Neovim + tmux</span></div>
-        <div><span class="key">Stack</span><span class="sep">: </span><span class="val">Java · Spring Boot · Lua · Bash</span></div>
-        <div><span class="key">Lang</span><span class="sep">: </span><span class="val">EN · VI · JA (studying)</span></div>
+        <div><span class="key">OS</span><span class="sep">: </span><span class="val">Arch Linux</span></div>
+        <div><span class="key">WM</span><span class="sep">: </span><span class="val">Hyprland</span></div>
+        <div><span class="key">Editor</span><span class="sep">: </span><span class="val">Neovim (jdtls)</span></div>
+        <div><span class="key">Term</span><span class="sep">: </span><span class="val">tmux + zsh</span></div>
+        <div><span class="key">Stack</span><span class="sep">: </span><span class="val">Java · Spring Boot · PostgreSQL · Lua · Bash</span></div>
+        <div><span class="key">Lang</span><span class="sep">: </span><span class="val">VI · EN · JA (studying)</span></div>
         <div><span class="key">Uni</span><span class="sep">: </span><span class="val">FPT University</span></div>
         <div class="fastfetch-swatches">
           <span class="swatch" style={{ background: 'var(--ctp-red)' }}></span>
@@ -120,7 +122,7 @@ const morePosts = allPosts.length - posts.length;
           <span class="swatch" style={{ background: 'var(--ctp-green)' }}></span>
           <span class="swatch" style={{ background: 'var(--ctp-blue)' }}></span>
           <span class="swatch" style={{ background: 'var(--ctp-mauve)' }}></span>
-          <span class="fastfetch-status"><span class="dot">●</span> learning, building, shipping</span>
+          <span class="fastfetch-status"><span class="dot">●</span> open to internship - HCMC</span>
         </div>
       </div>
     </div>
@@ -181,12 +183,19 @@ const morePosts = allPosts.length - posts.length;
         <span class="note"># {allPosts.length} total</span>
       </div>
       <div class="writing-list">
-        {posts.map((post) => (
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div class="writing-row">
+              <a href={`/blog/${post.id}`}>{post.title}</a>
+              <span class="date">{post.date}</span>
+            </div>
+          ))
+        ) : (
           <div class="writing-row">
-            <a href={`/blog/${post.id}`}>{post.title}</a>
-            <span class="date">{post.date}</span>
+            <span>first entries in progress - nothing published yet</span>
+            <span class="date">--</span>
           </div>
-        ))}
+        )}
       </div>
       <a class="section-more" href="/blog">
         <span class="prompt">❯</span>
