@@ -149,7 +149,7 @@ function filePanels() {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://duu261.indevs.in',
+  site: 'https://duu261.me',
 
   markdown: {
     processor: satteri({

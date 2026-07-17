@@ -1,4 +1,4 @@
-# duu261.indevs.in
+# duu261.me
 
 Personal site of Nguyễn Như Vũ - Java backend / BrSE student in Ho Chi Minh City.
 
